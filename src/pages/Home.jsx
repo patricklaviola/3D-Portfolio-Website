@@ -2,9 +2,8 @@ import { useState, Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Loader from '../components/Loader';
 
-import Island from '../models/Island';
+
 import Sky from '../models/Sky';
-import Bird from '../models/Bird';
 import Rocket from '../models/Rocket';
 import HomeInfo from '../components/HomeInfo';
 import BlackHole from '../models/BlackHole';
@@ -37,11 +36,11 @@ const Home = () => {
 
     // If screen width is less than 768px, adjust the scale and position
     if (window.innerWidth < 768) {
-      screenScale = [1.5, 1.5, 1.5];
-      screenPosition = [0, -1.5, 0];
+      screenScale = [0.007, 0.007, 0.007];
+      screenPosition = [0, -4, -3];
     } else {
       screenScale = [0.007, 0.007, 0.007];
-      screenPosition = [-2, -4, -2];
+      screenPosition = [0, -4, -2];
     }
 
     return [screenScale, screenPosition];
@@ -52,7 +51,7 @@ const Home = () => {
 
     if (window.innerWidth < 768) {
       screenScale = [0.9, 0.9, 0.9];
-      screenPosition = [0, -6.5, -43.4];
+      screenPosition = [0, -1, -5];
     } else {
       screenScale = [3.5, 3.5, 3.5];
       screenPosition = [0, -1, -20];

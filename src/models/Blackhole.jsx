@@ -24,11 +24,13 @@ const BlackHole = ({
     currentFocusPoint,
     ...props
 }) => {
-    const blackHoleRef = useRef();
-    // Get access to the Three.js renderer and viewport
-    const { gl, viewport } = useThree();
-    const { nodes, materials, animations } = useGLTF(blackHoleScene);
-    const { actions } = useAnimations(animations, blackHoleRef);
+
+  const blackHoleRef = useRef();
+  // Get access to the Three.js renderer and viewport
+  const { gl, viewport } = useThree();
+  const { nodes, materials, animations } = useGLTF(blackHoleScene);
+  const { actions } = useAnimations(animations, blackHoleRef);
+
     
   // Use a ref for the last mouse x position
   const lastX = useRef(0);
@@ -36,6 +38,7 @@ const BlackHole = ({
   const rotationSpeed = useRef(0);
   // Define a damping factor to control rotation damping
   const dampingFactor = 0.95;
+
 
   // Handle pointer (mouse or touch) down event
   const handlePointerDown = (event) => {
@@ -103,6 +106,10 @@ const BlackHole = ({
   };
 
   useEffect(() => {
+    actions['Take 001'].play();
+  }, [])
+  
+  useEffect(() => {
     // Add event listeners for pointer and keyboard events
     const canvas = gl.domElement;
     canvas.addEventListener("pointerdown", handlePointerDown);
@@ -119,7 +126,7 @@ const BlackHole = ({
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove ]);
 
   // This function is called on each frame update
   useFrame(() => {
