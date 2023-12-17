@@ -16,7 +16,7 @@ import galaxyScene from '../assets/3d/sun.glb';
 
 const Sun = (props) => {
     const galaxyRef = useRef();
-    const { nodes, materials, scene, animations } = useGLTF(galaxyScene);
+    const { scene, animations } = useGLTF(galaxyScene);
     const { actions } = useAnimations(animations, galaxyRef);
     
     useEffect(() => {
@@ -28,10 +28,10 @@ const Sun = (props) => {
         galaxyRef.current.position.y = Math.sin(clock.elapsedTime) * 0.2 + 2;
     
         // Check if the sun reached a certain endpoint relative to the camera
-        if (galaxyRef.current.position.x > camera.position.x + 5) {
+        if (galaxyRef.current.position.x > camera.position.x + 10) {
           // Change direction to backward and rotate the sun 180 degrees on the y-axis
           galaxyRef.current.rotation.y = Math.PI;
-        } else if (galaxyRef.current.position.x < camera.position.x - 3) {
+        } else if (galaxyRef.current.position.x < camera.position.x - 4) {
           // Change direction to forward and reset the sun's rotation
           galaxyRef.current.rotation.y = 0;
         }
@@ -39,12 +39,12 @@ const Sun = (props) => {
         // Update the X and Z positions based on the direction
         if (galaxyRef.current.rotation.y === 0) {
           // Moving forward
-          galaxyRef.current.position.x += 0.01;
-          galaxyRef.current.position.z -= 0.01;
+          galaxyRef.current.position.x += 0.1;
+          galaxyRef.current.position.z -= 0.1;
         } else {
           // Moving backward
-          galaxyRef.current.position.x -= 0.01;
-          galaxyRef.current.position.z += 0.01;
+          galaxyRef.current.position.x -= 0.1;
+          galaxyRef.current.position.z += 0.1;
         }
     });
 
