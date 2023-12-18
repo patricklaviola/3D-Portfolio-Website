@@ -43,7 +43,7 @@ const BlackHole = ({
   // Handle pointer (mouse or touch) down event
   const handlePointerDown = (event) => {
     event.stopPropagation();
-    event.preventDefault();
+    // event.preventDefault();
     setIsRotating(true);
 
     // Calculate the clientX based on whether it's a touch event or a mouse event
@@ -56,14 +56,14 @@ const BlackHole = ({
   // Handle pointer (mouse or touch) up event
   const handlePointerUp = (event) => {
     event.stopPropagation();
-    event.preventDefault();
+    // event.preventDefault();
     setIsRotating(false);
   };
 
   // Handle pointer (mouse or touch) move event
   const handlePointerMove = (event) => {
     event.stopPropagation();
-    event.preventDefault();
+    // event.preventDefault();
     if (isRotating) {
       // If rotation is enabled, calculate the change in clientX position
       const clientX = event.touches ? event.touches[0].clientX : event.clientX;
@@ -111,20 +111,27 @@ const BlackHole = ({
   
   useEffect(() => {
     // Add event listeners for pointer and keyboard events
+    const blackHole = blackHoleRef.current;
     const canvas = gl.domElement;
-    canvas.addEventListener("pointerdown", handlePointerDown);
-    canvas.addEventListener("pointerup", handlePointerUp);
-    canvas.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    if (blackHole) {
+      blackHole.addEventListener("pointerdown", handlePointerDown);
+      // window.addEventListener("pointerup", handlePointerUp);
+      blackHole.addEventListener("pointerup", handlePointerUp);
+      blackHole.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keyup", handleKeyUp);
+    }
 
     // Remove event listeners when component unmounts
     return () => {
-      canvas.removeEventListener("pointerdown", handlePointerDown);
-      canvas.removeEventListener("pointerup", handlePointerUp);
-      canvas.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      if (blackHole) {
+        blackHole.removeEventListener("pointerdown", handlePointerDown);
+        // window.removeEventListener("pointerup", handlePointerUp);
+        blackHole.removeEventListener("pointerup", handlePointerUp);
+        blackHole.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("keyup", handleKeyUp);
+      }
     };
   }, [gl, handlePointerDown, handlePointerUp, handlePointerMove ]);
 
@@ -185,7 +192,14 @@ const BlackHole = ({
   });
   
   return (
-    <group ref={blackHoleRef} {...props} dispose={null}>
+    <group 
+      ref={blackHoleRef}
+      {...props} 
+      dispose={null}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerMove={handlePointerMove}
+    >
       <group name="Sketchfab_Scene">
         <group
           name="Sketchfab_model"

@@ -1,15 +1,13 @@
-import hero from './hero.jpg'
-import meta from './meta.png'
-import shopify from './shopify.png'
-import starbucks from './starbucks.png'
-import tesla from './tesla.png'
+import hackreactor from './hackreactor.png'
+import ethica from './ethica.png'
+import fontana from './fontana.svg'
 import logo from './logo.svg'
+import hero from './hero.jpg'
 
 export {
     hero,
-    meta,
-    shopify,
-    starbucks,
-    tesla,
+    ethica,
+    fontana,
+    hackreactor,
     logo
 }

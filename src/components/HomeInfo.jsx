@@ -14,20 +14,26 @@ const InfoBox = ({ text, link, btnText }) => (
 
 const renderContent = {
     1: (
-        <h1 className='sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5'>
-            Welcome weary traveler. Drag the black hole to see more...
-        </h1>
+        <div className='sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5'>
+            <h1>Welcome to my space!</h1>
+            <br />
+            <div>Sure, you can use the navbar for easy navigation..</div>
+            {/* <br /> */}
+            <div>OR</div>
+            {/* <br /> */}
+            <div>You can take the black hole for a spin</div>
+        </div>
     ),
     2: (
         <InfoBox
-            text="Hi, I'm Patrick. A Sofware Engineer."
+            text="I used to work with fine Italian wines, now I build web apps!"
             link="/about"
             btnText="Learn more"
         />
     ),
     3: (
         <InfoBox
-            text="I'm avidly learning new technologies and building new apps. Curious?"
+            text="I'm having a blast learning new technologies and building new apps. Take a look!"
             link="/projects"
             btnText="Visit my portfolio"
         />

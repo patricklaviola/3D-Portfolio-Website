@@ -1,4 +1,4 @@
-import { meta, shopify, starbucks, tesla } from "../assets/images";
+import { hackreactor, ethica, fontana } from "../assets/images";
 import {
     car,
     contact,
@@ -33,11 +33,6 @@ export const skills = [
         type: "Frontend",
     },
     {
-        imageUrl: express,
-        name: "Express",
-        type: "Backend",
-    },
-    {
         imageUrl: git,
         name: "Git",
         type: "Version Control",
@@ -61,11 +56,6 @@ export const skills = [
         imageUrl: mongodb,
         name: "MongoDB",
         type: "Database",
-    },
-    {
-        imageUrl: motion,
-        name: "Motion",
-        type: "Animation",
     },
     {
         imageUrl: mui,
@@ -93,73 +83,51 @@ export const skills = [
         type: "State Management",
     },
     {
-        imageUrl: sass,
-        name: "Sass",
-        type: "Frontend",
-    },
-    {
         imageUrl: tailwindcss,
         name: "Tailwind CSS",
         type: "Frontend",
     },
-    {
-        imageUrl: typescript,
-        name: "TypeScript",
-        type: "Frontend",
-    }
+    // {
+    //     imageUrl: typescript,
+    //     name: "TypeScript",
+    //     type: "Frontend",
+    // }
 ];
 
 export const experiences = [
     {
-        title: "React.js Developer",
-        company_name: "Starbucks",
-        icon: starbucks,
+        title: "Full Stack Software Engineering Student",
+        company_name: "Hack Reactor by Galvanize",
+        icon: hackreactor,
         iconBg: "#accbe1",
-        date: "March 2020 - April 2021",
+        date: "June 2023 - November 2023",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Explored Domain Driven Design, built scalable and fault-tolerant applications, and created microservices using JavaScript and React. Participated in a team project to build a complex web application, employing Agile development practices.",
+            "Gained experience in building near-real-time applications with WebSockets and FastAPI. Worked with various data structures and managed different types of data using PostgreSQL.",
+            "Implemented continuous integration and delivery pipelines using GitLab Pipelines. Developed a web application utilizing cloud-native services, focusing on robustness and scalability in a cloud environment.",
+            "Developed a full-stack web application using Python, Django, HTML, CSS, and relational databases. Designed and implemented both front-end and back-end components, integrating server-side logic with a user-friendly interface.",
         ],
     },
     {
-        title: "React Native Developer",
-        company_name: "Tesla",
-        icon: tesla,
-        iconBg: "#fbc3bc",
-        date: "Jan 2021 - Feb 2022",
+        title: "Regional Sales Manager",
+        company_name: "Ethica Wines",
+        icon: ethica,
+        iconBg: "#dae6dc",
+        date: "Feb 2019 - July 2023",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Led all sales operations in Colorado and six other states, managing distribution growth, sales targets, and successful order fulfillment by working closely with clients’ senior leadership, sales, purchasing, and logistics teams.",
+            "Increased annual revenue by 12x in four years by establishing partnerships with new distributors, conducting frequent sales meetings, managing budgets, and participating in industry events.",
         ],
     },
     {
-        title: "Web Developer",
-        company_name: "Shopify",
-        icon: shopify,
-        iconBg: "#b7e4c7",
-        date: "Jan 2022 - Jan 2023",
+        title: "Export Area Manager",
+        company_name: "Fontanafredda",
+        icon: fontana,
+        iconBg: "#baadcc",
+        date: "Aug 2017 - Dec 2018",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
-        ],
-    },
-    {
-        title: "Full stack Developer",
-        company_name: "Meta",
-        icon: meta,
-        iconBg: "#a2d2ff",
-        date: "Jan 2023 - Present",
-        points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Grew overall sales revenue by 26% across clients in the UK, Ireland, Belgium, Netherlands, Poland, Czech Republic, South Africa, Belarus, Hungary, Moldova, Uzbekistan, Slovakia, Slovenia.",
+            "Pioneered the opening of markets in Ireland, Poland, Belarus, and Kaliningrad by conducting sales negotiations with new partners, leading meetings, visiting key accounts.",
         ],
     },
 ];
@@ -184,45 +152,24 @@ export const socialLinks = [
 
 export const projects = [
     {
-        iconUrl: pricewise,
-        theme: 'btn-back-red',
-        name: 'Amazon Price Tracker',
-        description: 'Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.',
-        link: 'https://github.com/adrianhajdin/pricewise',
-    },
-    {
-        iconUrl: threads,
-        theme: 'btn-back-green',
-        name: 'Full Stack Threads Clone',
-        description: 'Created a full-stack replica of the popular discussion platform "Threads," enabling users to post and engage in threaded conversations.',
-        link: 'https://github.com/adrianhajdin/threads',
+        iconUrl: snapgram,
+        theme: 'btn-back-pink',
+        name: 'GET2GETHER',
+        description: 'A full-stack web application aimed at simplifying event planning for social gatherings by allowing authenticated users to create and manage friend groups and group events as well as communicate with other group members through a built-in group chat feature.',
+        link: 'https://gitlab.com/cappuccino-coders/get-2-gether',
     },
     {
         iconUrl: car,
         theme: 'btn-back-blue',
-        name: 'Car Finding App',
-        description: 'Designed and built a mobile app for finding and comparing cars on the market, streamlining the car-buying process.',
-        link: 'https://github.com/adrianhajdin/project_next13_car_showcase',
-    },
-    {
-        iconUrl: snapgram,
-        theme: 'btn-back-pink',
-        name: 'Full Stack Instagram Clone',
-        description: 'Built a complete clone of Instagram, allowing users to share photos and connect with friends in a familiar social media environment.',
-        link: 'https://github.com/adrianhajdin/social_media_app',
-    },
-    {
-        iconUrl: estate,
-        theme: 'btn-back-black',
-        name: 'Real-Estate Application',
-        description: 'Developed a web application for real estate listings, facilitating property searches and connecting buyers with sellers.',
-        link: 'https://github.com/adrianhajdin/projects_realestate',
+        name: 'Vehicle Management System',
+        description: 'A robust full-stack web app designed for tracking, reporting, and managing vehicle inventory, sales, and service.',
+        link: 'https://gitlab.com/patrick.laviola/project-beta',
     },
     {
         iconUrl: summiz,
-        theme: 'btn-back-yellow',
-        name: 'AI Summarizer Application',
-        description: 'App that leverages AI to automatically generate concise & informative summaries from lengthy text content, or blogs.',
-        link: 'https://github.com/adrianhajdin/project_ai_summarizer',
-    }
+        theme: 'btn-back-green',
+        name: 'Conference Management System',
+        description: 'A web application that serves as a hub for managing various conferences, conference attendees, and events.',
+        link: 'https://gitlab.com/patrick.laviola/conference-go',
+    },
 ];

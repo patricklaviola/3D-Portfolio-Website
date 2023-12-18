@@ -27,7 +27,7 @@ const About = () => {
         <h3 className='subhead-text'>My Skills</h3>
         <div className='mt-16 flex flex-wrap gap-12'>
           {skills.map((skill) => (
-            <div className='block-container w-20 h-20'>
+            <div key={skill.name} className='block-container w-20 h-20'>
               <div className='btn-back rounded-xl' />
               <div className='btn-front rounded-xl flex justify-center items-center'>
                 <img 
@@ -44,7 +44,7 @@ const About = () => {
         <h3 className='subhead-text'>Experience</h3>  
         <div className='mt-5 flex-col gap-3 text-slate-500'>
           <p>
-            I've worked with all sorts of companies, leveling up my skills and teaming up with smart people. Here's the rundown:
+            ***PLACEHOLDER*** write one sentence summarizing experience:
           </p>
         </div>
         <div className='mt-12 flex'>

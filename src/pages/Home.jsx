@@ -90,7 +90,6 @@ const Home = () => {
             groundColor='#000000'
             intensity={1}
           />
-          <Sun />
           <Sky 
             isRotating={isRotating}
           />
@@ -102,6 +101,7 @@ const Home = () => {
             rotation={[0.1, 4.7077, 0]}
             scale={blackHoleScale}
           />
+          <Sun />
           <Rocket
             isRotating={isRotating}
             position={rocketPosition}
