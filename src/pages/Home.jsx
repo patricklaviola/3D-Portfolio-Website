@@ -31,20 +31,20 @@ const Home = () => {
     };
   }, [isPlayingMusic]);
 
-  const adjustRocketForScreenSize = () => {
-    let screenScale, screenPosition;
+  // const adjustRocketForScreenSize = () => {
+  //   let screenScale, screenPosition;
 
-    // If screen width is less than 768px, adjust the scale and position
-    if (window.innerWidth < 768) {
-      screenScale = [0.007, 0.007, 0.007];
-      screenPosition = [0, -4, -3];
-    } else {
-      screenScale = [0.007, 0.007, 0.007];
-      screenPosition = [0, -4, -2];
-    }
+  //   // If screen width is less than 768px, adjust the scale and position
+  //   if (window.innerWidth < 768) {
+  //     screenScale = [0.007, 0.007, 0.007];
+  //     screenPosition = [0, -4, -3];
+  //   } else {
+  //     screenScale = [0.007, 0.007, 0.007];
+  //     screenPosition = [0, -4, -2];
+  //   }
 
-    return [screenScale, screenPosition];
-  };
+  //   return [screenScale, screenPosition];
+  // };
 
   const adjustBlackHoleForScreenSize = () => {
     let screenScale, screenPosition;
@@ -60,7 +60,7 @@ const Home = () => {
     return [screenScale, screenPosition];
   };
 
-  const [rocketScale, rocketPosition] = adjustRocketForScreenSize();
+  // const [rocketScale, rocketPosition] = adjustRocketForScreenSize();
   const [blackHoleScale, blackHolePosition] = adjustBlackHoleForScreenSize();
 
   return (
@@ -98,16 +98,17 @@ const Home = () => {
             setIsRotating={setIsRotating}
             setCurrentStage={setCurrentStage}
             position={blackHolePosition}
-            rotation={[0.1, 4.7077, 0]}
+            rotation={[0.1, 0, 0.05]}
             scale={blackHoleScale}
           />
           <Sun />
-          <Rocket
+          {/* <Rocket
             isRotating={isRotating}
             position={rocketPosition}
-            rotation={[0, 6.5, 0.2]}
+            rotation={[0, 6.3, 0.2]}
             scale={rocketScale}
-          />
+          /> */}
+          <Rocket />
         </Suspense>
       </Canvas>
 

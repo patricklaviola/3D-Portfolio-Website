@@ -15,7 +15,7 @@ const InfoBox = ({ text, link, btnText }) => (
             variants={fadeIn("down", "spring", 0.1, 0.9)}
             className='info-box w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
         >
-            <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'>
+            <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[180px] flex justify-evenly items-center flex-col'>
                 <div className='font-medium sm:text-xl text-center'>{text}</div>
                 {link && btnText && (
                     <Link to={link} className='neo-brutalism-white neo-btn'>
@@ -58,32 +58,45 @@ const renderContent = {
                     <br />
                     <span style={{ fontSize: 'smaller' }}>
                         <em>
-                            Be sure to take the <strong className='green-pink-gradient-text'>black hole </strong> for a spin OR bounce the <strong className='green-pink-gradient-text'>Sun </strong> around the screen.                                
+                            Be sure to take the <strong className='green-pink-gradient-text'>black hole </strong> for a spin (arrows or scroll)                                
+                        </em>
+                        <br />
+                        <em>
+                            OR bounce the <strong className='green-pink-gradient-text'>Sun </strong> around the screen.
                         </em>
                     </span>
+                    <div>1</div>
                 </div>
             }
-        />
-    ),
-    2: (
-        <InfoBox
-            text="I used to travel the world selling fine Italian wines, now I'm a full-stack web developer!"
+            />
+            ),
+            2: (
+                <InfoBox
+                text="I used to travel the world selling fine Italian wines 🍷, now I'm a full-stack web developer  "
+                text={
+                    <div>
+                        I used to travel the world selling <span className='green-pink-gradient-text'>fine Italian wines</span>🍷                                
+                        <br />
+                        <br />
+                        Now I'm a <span className='green-pink-gradient-text'>full stack web developer </span>💻
+                    </div>
+                }
             link="/about"
-            btnText="Learn more"
+            btnText="Learn more 2"
         />
     ),
     3: (
         <InfoBox
             text="I'm avidly learning new technologies and working on new projects"
             link="/projects"
-            btnText="See my work"
+            btnText="See my work 3"
         />
     ),
     4: (
         <InfoBox
             text="Looking for a dev? I'm just a few keystrokes away."
             link="/contact"
-            btnText="Let's connect"
+            btnText="Let's connect 4"
         />
     ),
 }
