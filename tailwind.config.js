@@ -7,6 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "#050816",
+        secondary: "#aaa6c3",
+        tertiary: "#151030",
         gray: {
           200: "#D5DAE1"
         },
@@ -16,7 +19,7 @@ export default {
         },
         blue: {
           500: "#2b77e7"
-        }
+        },
       },
       fontFamily: {
         worksans: ["Work Sans", "sans-serif"],

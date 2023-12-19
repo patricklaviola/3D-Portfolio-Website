@@ -10,7 +10,7 @@
 }
 
 body {
-  font-family: "Work Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body:has(.card[data-color="blue"]:hover) {
@@ -63,7 +63,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .info-box {
-    @apply mx-5 relative flex text-white flex-col gap-3 max-w-2xl neo-brutalism-blue pt-4 pb-12 px-8;
+    @apply mx-5 relative flex text-white flex-col gap-3 max-w-2xl neo-brutalism-blue pt-1 pb-1 px-1;
   }
 
   .neo-btn {
@@ -165,19 +165,39 @@ body:has(.card[data-color="green"]:hover) {
   transform: translateZ(80px) translateY(-5px) rotateX(15deg) rotateY(15deg);
 }
 
-/* Neo Brutalism */
 .neo-brutalism-blue {
-  background: #2b77e7;
+  background: #151030;
   position: relative;
-  border-radius: 10px;
-  border: #2b77e7;
-  box-shadow: 0.6vmin 0.6vmin #336cc1, 1vmin 1vmin #0092db, 1vmin 1vmin #0092db,
-    0.65vmin 1vmin #0092db, 1vmin 0.65vmin #0092db;
+  border-radius: 20px;
+}
+
+.green-pink-gradient {
+  background: #00cea8;
+  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+}
+
+.green-pink-gradient-text {
+  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .neo-brutalism-white {
   background: #fff;
   border: #fff;
-  box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
-    0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
+  box-shadow: 0.3vmin 0.3vmin #ababe1;
+}
+
+/* canvas- styles */
+.loader {
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  animation: mulShdSpin 1.1s infinite ease;
+  transform: translateZ(0);
 }
