@@ -8,21 +8,14 @@ import { fadeIn, fadeOut } from '../utils/motion';
 
 
 const InfoBox = ({ text, link, btnText }) => (
-    <Tilt>
+    <Tilt options={{ max: 20, scale: 1, speed: 300, glare: true, 'max-glare': 0.5 }}>
         <motion.div
             initial="hidden"
             animate="show"
             variants={fadeIn("down", "spring", 0.1, 0.9)}
             className='info-box w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
         >
-            <div
-                options={{
-                    max: 45,
-                    scale: 1,
-                    speed: 450,
-                }}
-                className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
-            >
+            <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'>
                 <div className='font-medium sm:text-xl text-center'>{text}</div>
                 {link && btnText && (
                     <Link to={link} className='neo-brutalism-white neo-btn'>
