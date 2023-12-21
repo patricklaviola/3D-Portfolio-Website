@@ -24,10 +24,10 @@ const Rocket = ({ isRotating, ...props }) => {
       rocketRef.current.position.y = Math.sin(clock.elapsedTime) * 0.2 - 1;
   
       // Check if the rocket reached a certain endpoint relative to the camera
-      if (rocketRef.current.position.x > camera.position.x + 0.01) {
+      if (rocketRef.current.position.x > camera.position.x + 0.5) {
         // Change direction to backward and rotate the rocket 180 degrees on the y-axis
         rocketRef.current.rotation.y = Math.PI;
-      } else if (rocketRef.current.position.x < camera.position.x - 1.4) {
+      } else if (rocketRef.current.position.x < camera.position.x - 0.2) {
         // Change direction to forward and reset the rocket's rotation
         rocketRef.current.rotation.y = 0;
       }
@@ -35,21 +35,21 @@ const Rocket = ({ isRotating, ...props }) => {
       // Update the X and Z positions based on the direction
       if (rocketRef.current.rotation.y === 0) {
         // Moving forward
-        rocketRef.current.position.x += 0.004;
+        rocketRef.current.position.x += 0.002;
         rocketRef.current.position.z -= 0.04;
       } else {
         // Moving backward
-        rocketRef.current.position.x -= 0.004;
+        rocketRef.current.position.x -= 0.002;
         rocketRef.current.position.z += 0.04;
       }
     });
   
     return (
       // to create and display 3D objects
-      <mesh ref={rocketRef} position={[-1, 0, 0]} scale={[0.002, 0.002, 0.002]}>
+      <mesh ref={rocketRef} position={[0, 0, 0]} scale={[0.002, 0.002, 0.002]}>
         <primitive 
           object={scene}
-          rotation={[0, 1, 0]}
+          rotation={[0, 1.4, 0]}
         />
       </mesh>
     );
