@@ -18,7 +18,8 @@ const Home = () => {
   audioRef.current.loop = true;
 
   const [currentStage, setCurrentStage] = useState(1);
-  const [isRotating, setIsRotating] = useState(false);
+  const [isRotatingRight, setIsRotatingRight] = useState(false);
+  const [isRotatingLeft, setIsRotatingLeft] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   useEffect(() => {
@@ -50,11 +51,11 @@ const Home = () => {
     let screenScale, screenPosition;
 
     if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-      screenPosition = [0, -1, -5];
+      screenScale = [1, 1, 1];
+      screenPosition = [0, -1, -3];
     } else {
-      screenScale = [3.5, 3.5, 3.5];
-      screenPosition = [0, -1, -20];
+      screenScale = [2, 2, 2];
+      screenPosition = [0, -1, -10];
     }
 
     return [screenScale, screenPosition];
@@ -70,9 +71,7 @@ const Home = () => {
       </div>
 
       <Canvas
-        className={`w-full h-screen bg-transparent ${
-          isRotating ? "cursor-grabbing" : "cursor-grab"
-        }`}
+        className={`w-full h-screen bg-transparent`}
         camera={{ near: 0.1, far: 1000 }}
       >
         <Suspense fallback={<Loader />}>
@@ -91,19 +90,22 @@ const Home = () => {
             intensity={1}
           />
           <Sky 
-            isRotating={isRotating}
+            isRotatingRight={isRotatingRight}
+            isRotatingLeft={isRotatingLeft}
           />
           <BlackHole
-            isRotating={isRotating}
-            setIsRotating={setIsRotating}
+            isRotatingRight={isRotatingRight}
+            isRotatingLeft={isRotatingLeft}
+            setIsRotatingRight={setIsRotatingRight}
+            setIsRotatingLeft={setIsRotatingLeft}
             setCurrentStage={setCurrentStage}
             position={blackHolePosition}
-            rotation={[0.1, 0, 0.05]}
+            rotation={[0.1, 0, 0.1]}
             scale={blackHoleScale}
           />
           <Sun />
           {/* <Rocket
-            isRotating={isRotating}
+            isRotatingRight={isRotatingRight}
             position={rocketPosition}
             rotation={[0, 6.3, 0.2]}
             scale={rocketScale}

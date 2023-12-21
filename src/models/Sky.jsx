@@ -4,14 +4,17 @@ import { useFrame } from '@react-three/fiber';
 
 import skyScene from '../assets/3d/night_sky.glb'
 
-const Sky = ({ isRotating }) => {
+const Sky = ({ isRotatingRight, isRotatingLeft }) => {
     const sky = useGLTF(skyScene);
     const skyRef = useRef();
 
     useFrame((_, delta) => {
         // skyRef.current.rotation.y += 0.1 * delta
-        if(isRotating) {
-            skyRef.current.rotation.y += 0.5 * delta
+        if(isRotatingRight) {
+            skyRef.current.rotation.y += 0.8 * delta
+        }
+        if(isRotatingLeft) {
+            skyRef.current.rotation.y -= 0.8 * delta
         }
     })
 

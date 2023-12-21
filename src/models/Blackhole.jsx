@@ -7,7 +7,6 @@ Source: https://sketchfab.com/3d-models/blackhole-74cbeaeae2174a218fe9455d77902b
 Title: Blackhole
 */
 
-import { a } from "@react-spring/three";
 import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
@@ -18,8 +17,10 @@ import { useFrame, useThree } from "@react-three/fiber";
 import blackHoleScene from "../assets/3d/blackhole.glb";
 
 const BlackHole = ({
-    isRotating,
-    setIsRotating,
+    isRotatingRight,
+    isRotatingLeft,
+    setIsRotatingRight,
+    setIsRotatingLeft,
     setCurrentStage,
     currentFocusPoint,
     ...props
@@ -27,81 +28,54 @@ const BlackHole = ({
 
   const blackHoleRef = useRef();
   // Get access to the Three.js renderer and viewport
-  const { gl, viewport } = useThree();
+  const { gl } = useThree();
   const { nodes, materials, animations } = useGLTF(blackHoleScene);
   const { actions } = useAnimations(animations, blackHoleRef);
 
-    
-  // Use a ref for the last mouse x position
-  const lastX = useRef(0);
+
   // Use a ref for rotation speed
   const rotationSpeed = useRef(0);
   // Define a damping factor to control rotation damping
   const dampingFactor = 0.95;
 
 
-  // // Handle pointer (mouse or touch) down event
-  // const handlePointerDown = (event) => {
-  //   event.stopPropagation();
-  //   // event.preventDefault();
-  //   setIsRotating(true);
-
-  //   // Calculate the clientX based on whether it's a touch event or a mouse event
-  //   const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-
-  //   // Store the current clientX position for reference
-  //   lastX.current = clientX;
-  // };
-
-  // // Handle pointer (mouse or touch) up event
-  // const handlePointerUp = (event) => {
-  //   event.stopPropagation();
-  //   // event.preventDefault();
-  //   setIsRotating(false);
-  // };
-
-  // // Handle pointer (mouse or touch) move event
-  // const handlePointerMove = (event) => {
-  //   event.stopPropagation();
-  //   // event.preventDefault();
-  //   if (isRotating) {
-  //     // If rotation is enabled, calculate the change in clientX position
-  //     const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-
-  //     // calculate the change in the horizontal position of the mouse cursor or touch input,
-  //     // relative to the viewport's width
-  //     const delta = (clientX - lastX.current) / viewport.width;
-
-  //     // Update the black hole's rotation based on the mouse/touch movement
-  //     blackHoleRef.current.rotation.y += delta * 0.01 * Math.PI;
-
-  //     // Update the reference for the last clientX position
-  //     lastX.current = clientX;
-
-  //     // Update the rotation speed
-  //     rotationSpeed.current = delta * 0.01 * Math.PI;
-  //   }
-  // };
-
   // Handle keydown events
   const handleKeyDown = (event) => {
+    const action = actions['Take 001'];
+
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      if (!isRotating) setIsRotating(true);
+      if (!isRotatingRight) setIsRotatingRight(true);
 
       blackHoleRef.current.rotation.y += 0.009 * Math.PI;
       rotationSpeed.current = 0.09;
+
+      if (action) {
+        action.timeScale = 2;
+        action.play();
+      }
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      if (!isRotating) setIsRotating(true);
+      if (!isRotatingLeft) setIsRotatingLeft(true);
 
       blackHoleRef.current.rotation.y -= 0.009 * Math.PI;
       rotationSpeed.current = -0.09;
+
+      if (action) {
+        action.timeScale = -2;
+        action.play();
+      }
     }
   };
 
   // Handle keyup events
   const handleKeyUp = (event) => {
+    const action = actions['Take 001'];
+
     if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowDown") {
-      setIsRotating(false);
+      setIsRotatingRight(false);
+      setIsRotatingLeft(false);
+      if (action) {
+        action.timeScale = 0.5;
+      }
     }
   };
 
@@ -109,12 +83,18 @@ const BlackHole = ({
   const rotationEndTimeoutRef = useRef();
 
   // Handle scroll event
-  const handleScrollDown = (event) => {
+  const handleScroll = (event) => {
     event.stopPropagation();
-    setIsRotating(true);
+    // setIsRotatingRight(true);
 
     // Determine the scroll delta
     const scrollDelta = event.deltaY;
+
+    if (scrollDelta > 0) {
+      setIsRotatingRight(true);
+    } else {
+      setIsRotatingLeft(true);
+    }
 
     // Adjust the factor based on the desired sensitivity
     const rotationChange = scrollDelta * 0.0001 * Math.PI;
@@ -125,20 +105,42 @@ const BlackHole = ({
     // Update the rotation speed
     rotationSpeed.current = rotationChange;
 
+    // Determine the direction for the animation based on scroll direction
+    const action = actions['Take 001'];
+    if (action) {
+      if (scrollDelta > 0) {
+        // Scrolling down
+        action.timeScale = 2;
+      } else {
+        // Scrolling up
+        action.timeScale = -2;
+      }
+      action.play();
+    }
+
     // Clear any existing timeout
     clearTimeout(rotationEndTimeoutRef.current);
 
     // Set a new timeout
     rotationEndTimeoutRef.current = setTimeout(() => {
-      setIsRotating(false);
+      setIsRotatingRight(false);
+      setIsRotatingLeft(false);
+      if (action) {
+        action.timeScale = 0.5;
+      }
     }, 100); // Adjust the timeout duration as needed
   };
 
 
-
   useEffect(() => {
-    actions['Take 001'].play();
-  }, [])
+    const action = actions['Take 001'];
+
+    if (action) {
+      action.timeScale = 0.5;
+      action.play();
+    }
+  }, [actions])
+  
   
   useEffect(() => {
     // Add event listeners for pointer and keyboard events
@@ -149,7 +151,7 @@ const BlackHole = ({
       // blackHole.addEventListener("pointermove", handlePointerMove);
       window.addEventListener("keydown", handleKeyDown);
       window.addEventListener("keyup", handleKeyUp);
-      window.addEventListener("wheel", handleScrollDown);
+      window.addEventListener("wheel", handleScroll);
     }
 
     // Remove event listeners when component unmounts
@@ -160,15 +162,15 @@ const BlackHole = ({
         // blackHole.removeEventListener("pointermove", handlePointerMove);
         window.removeEventListener("keydown", handleKeyDown);
         window.removeEventListener("keyup", handleKeyUp);
-        window.removeEventListener("wheel", handleScrollDown);
+        window.removeEventListener("wheel", handleScroll);
       }
     };
-  }, [gl, handleScrollDown]);
+  }, [gl, handleScroll]);
 
   // This function is called on each frame update
   useFrame(() => {
     // If not rotating, apply damping to slow down the rotation (smoothly)
-    if (!isRotating) {
+    if (!isRotatingRight && !isRotatingLeft) {
       // Apply damping factor
       rotationSpeed.current *= dampingFactor;
 
@@ -187,8 +189,8 @@ const BlackHole = ({
 
       // Set the current stage based on the black hole's orientation
       const degreeToRadian = degree => degree * Math.PI / 180;
-      const stageRange = degreeToRadian(80);
-      const gapRange = degreeToRadian(10);
+      const stageRange = degreeToRadian(70);
+      const gapRange = degreeToRadian(20);
 
       const stage1Start = 0;
       const stage2Start = stage1Start + stageRange + gapRange;
@@ -223,7 +225,7 @@ const BlackHole = ({
       // onPointerDown={handlePointerDown}
       // onPointerUp={handlePointerUp}
       // onPointerMove={handlePointerMove}
-      onScroll={handleScrollDown}
+      onScroll={handleScroll}
     >
       <group name="Sketchfab_Scene">
         <group
