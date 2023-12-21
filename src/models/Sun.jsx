@@ -39,8 +39,8 @@ const Sun = (props) => { // Defining a functional component Sun
     } else {
       const aspectRatio = size.width / size.height;
       newBounds = {
-        x: size.width / 200,
-        y: size.height / 200,
+        x: size.width / 150,
+        y: size.height / 150,
         // x: 5 * aspectRatio, // More width, larger x boundary
         // y: 5 / aspectRatio, // More height, larger y boundary
         z: Math.min(size.width, size.height) / 100

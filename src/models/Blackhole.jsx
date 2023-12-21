@@ -189,8 +189,8 @@ const BlackHole = ({
 
       // Set the current stage based on the black hole's orientation
       const degreeToRadian = degree => degree * Math.PI / 180;
-      const stageRange = degreeToRadian(70);
-      const gapRange = degreeToRadian(20);
+      const stageRange = degreeToRadian(50);
+      const gapRange = degreeToRadian(40);
 
       const stage1Start = 0;
       const stage2Start = stage1Start + stageRange + gapRange;
