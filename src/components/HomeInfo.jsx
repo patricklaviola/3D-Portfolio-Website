@@ -14,10 +14,10 @@ const InfoBox = ({ text, link, btnText }) => (
         <motion.div
             initial="hidden"
             animate="show"
-            variants={fadeIn("down", "spring", 0.1, 3)}
+            variants={fadeIn("down", "spring", 0.1, 1)}
             className='info-box w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
         >
-            <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[150px] flex justify-evenly items-center'>
+            <div className='bg-tertiary rounded-[20px] py-5 px-5 min-h-[150px] flex justify-evenly items-center'>
                 <div className='text-center'>{text}</div>
                 {link && btnText && (
                     <Link to={link} className='neo-brutalism-white neo-btn'>
@@ -25,25 +25,59 @@ const InfoBox = ({ text, link, btnText }) => (
                         <img src={arrow} className='w-4 h-4 object-contain' />
                     </Link>
                 )}
+                <div className='top-container'>
+                    <div className='w-[10%] flex justify-center items-center ps-5'>
+                        <div className='w-[30px] h-[60px] rounded-3xl border-2 border-secondary flex justify-center items-start p-2'>
+                            <motion.div
+                                animate={{
+                                    y: [0, 24, 0],
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "loop",
+                                }}
+                                className='w-2 h-3 rounded-full bg-secondary mb-1'
+                            />
+                        </div>
+                    </div>
+                    <div className='container'>
+                        <div class='top-box'>
+                            <motion.div
+                                animate={{
+                                    y: [0, 3, 0],
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "loop",
+                                }}
+                                className='dot'
+                            />
+                        </div>
+                        <div className='row'>
+                            {[...Array(3)].map((_, index) => (
+                                <div key={index} className='box'>
+                                    <motion.div
+                                        animate={{
+                                            y: [0, 3, 0],
+                                        }}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            repeatType: "loop",
+                                        }}
+                                        className='dot'
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>                
+                </div>
             </div>
         </motion.div>
-        <div className='mt-8 w-full flex justify-center items-center'>
-            <div className='w-[30px] h-[60px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
-            <motion.div
-                animate={{
-                    y: [0, 24, 0],
-                }}
-                transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "loop",
-                }}
-                className='w-2 h-3 rounded-full bg-secondary mb-1'
-            />
-            </div>
-        </div>
     </Tilt>
-)
+);
 
 const renderContent = {
     1: (
