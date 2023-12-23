@@ -21,11 +21,20 @@ const Sun = ({ setCurrentStage }) => {
   const { size } = useThree(); // Getting the size of the canvas from react-three-fiber's context
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 }) // State to store bounds for sun's movement
   const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
+  
 
   // Play the initial animation on component mount
   useEffect(() => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
+
+
+  useEffect(() => {
+    if (hasBeenDragged) {
+      setCurrentStage(null);
+    }
+  }, [hasBeenDragged])
+  
 
   // Update bounds based on screen size
   useEffect(() => {
@@ -49,12 +58,15 @@ const Sun = ({ setCurrentStage }) => {
   }, [size]);
 
 
-  const bind = useDrag(({ xy: [x, y], lastOffset: [lx, ly], down }) => {
+  const bind = useDrag(({ xy: [x, y], down, movement: [mx, my] }) => {
     const scaleFactor = 800; // A constant to scale the drag effect
     const xPosition = (x - size.width / 2) / 60;
     const yPosition = (size.height / 2 - y) / 60;
   
-    if (down) {      
+    if (down) {
+      sunRef.current.position.x = xPosition;
+      sunRef.current.position.y = yPosition;
+
       if (!hasBeenDragged) {
         // Set the stable position to the sun's current position when drag starts
         setStablePosition({ 
@@ -73,18 +85,9 @@ const Sun = ({ setCurrentStage }) => {
       // sunRef.current.position.y = stablePosition.y - y / scaleFactor;
     } else {
       // Update velocity when drag ends
-      const newVelocity = {
-        x: (stablePosition.x - lx) / scaleFactor,
-        y: -(stablePosition.y - ly) / scaleFactor,
-      };
-      setVelocity(newVelocity); // Set the new velocity
-      // Update stable position when drag ends
-      setStablePosition({ 
-        x: sunRef.current.position.x,
-        // x: xPosition,
-        y: sunRef.current.position.y,
-        // y: yPosition,
-        z: sunRef.current.position.z
+      setVelocity({
+        x: mx / scaleFactor,
+        y: -my / scaleFactor,
       });
     }
   }, { pointerEvents: true }); // Enable pointer events for the drag
@@ -133,27 +136,17 @@ const Sun = ({ setCurrentStage }) => {
   });
 
 
-  useEffect(() => {
-    if (hasBeenDragged) {
-      setCurrentStage(null);
-      // const timer = setTimeout(() => {
-      //   setHasBeenDragged(false);
-      // }, 5000);
-    }
-  }, [hasBeenDragged])
-
-  // Render the mesh (3D object)
   return (
     <mesh
-      position={[2, -1.4, 0]} // Set initial position of the mesh
-      scale={[0.09, 0.09, 0.09]} // Set scale of the mesh
-      ref={sunRef} // Attach the ref to the mesh
-      {...bind()} // Apply drag bindings to the mesh
+      position={[2, -1.4, 0]}
+      scale={[0.09, 0.09, 0.09]}
+      ref={sunRef}
+      {...bind()}
     >
       <primitive object={scene} />
     </mesh>
   );
 }
 
-export default Sun; // Export the Sun component
+export default Sun;
 

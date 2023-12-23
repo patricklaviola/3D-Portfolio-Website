@@ -42,7 +42,7 @@ const InfoBox = ({ text, link, btnText }) => (
                         </div>
                     </div>
                     <div className='container'>
-                        <div class='top-box'>
+                        <div className='top-box'>
                             <motion.div
                                 animate={{
                                     y: [0, 3, 0],

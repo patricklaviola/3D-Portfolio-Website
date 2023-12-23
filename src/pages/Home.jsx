@@ -22,6 +22,7 @@ const Home = () => {
   const [isRotatingLeft, setIsRotatingLeft] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
+
   useEffect(() => {
     if (isPlayingMusic) {
       audioRef.current.play();
@@ -32,20 +33,6 @@ const Home = () => {
     };
   }, [isPlayingMusic]);
 
-  // const adjustRocketForScreenSize = () => {
-  //   let screenScale, screenPosition;
-
-  //   // If screen width is less than 768px, adjust the scale and position
-  //   if (window.innerWidth < 768) {
-  //     screenScale = [0.007, 0.007, 0.007];
-  //     screenPosition = [0, -4, -3];
-  //   } else {
-  //     screenScale = [0.007, 0.007, 0.007];
-  //     screenPosition = [0, -4, -2];
-  //   }
-
-  //   return [screenScale, screenPosition];
-  // };
 
   const adjustBlackHoleForScreenSize = () => {
     let screenScale, screenPosition;
@@ -61,8 +48,9 @@ const Home = () => {
     return [screenScale, screenPosition];
   };
 
-  // const [rocketScale, rocketPosition] = adjustRocketForScreenSize();
+
   const [blackHoleScale, blackHolePosition] = adjustBlackHoleForScreenSize();
+
 
   return (
     <section className='w-full h-screen relative'>
@@ -106,8 +94,6 @@ const Home = () => {
           <Sun
             setCurrentStage={setCurrentStage}
           />
-          {/* <Sun /> */}
-          {/* {currentStage && <Sun currentStage={currentStage} />} */}
           <Rocket />
         </Suspense>
       </Canvas>
