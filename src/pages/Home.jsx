@@ -9,11 +9,11 @@ import HomeInfo from '../components/HomeInfo';
 import BlackHole from '../models/BlackHole';
 import Sun from '../models/Sun';
 
-import sakura from '../assets/sakura.mp3'
+import lofi from '../assets/lofi.mp3'
 import { soundoff, soundon } from '../assets/icons';
 
 const Home = () => {
-  const audioRef = useRef(new Audio(sakura));
+  const audioRef = useRef(new Audio(lofi));
   audioRef.current.volume = 0.4;
   audioRef.current.loop = true;
 
