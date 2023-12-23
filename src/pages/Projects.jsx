@@ -10,9 +10,6 @@ const Projects = () => {
         My <span className='blue-gradient_text font-semibold drop-shadow'>Projects</span>
       </h1>
       <div className='mt-5 flex-col gap-3 text-slate-500'>
-        <p>
-          ***PLACEHOLDER*** write one sentence summarizing experience:
-        </p>
       </div>
       <div className='flex flex-wrap my-20 gap-16'>
         {projects.map((project) => (

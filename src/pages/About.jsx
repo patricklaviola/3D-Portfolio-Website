@@ -36,16 +36,13 @@ const About = () => {
                   className='w-1/2 h-1/2 object-contain'
                 />
               </div>
-            </div>            
+            </div>
           ))}
         </div>
       </div>
       <div className='py-16'>
-        <h3 className='subhead-text'>Experience</h3>  
+        <h3 className='subhead-text'>My Experience</h3>  
         <div className='mt-5 flex-col gap-3 text-slate-500'>
-          <p>
-            ***PLACEHOLDER*** write one sentence summarizing experience:
-          </p>
         </div>
         <div className='mt-12 flex'>
           <VerticalTimeline>

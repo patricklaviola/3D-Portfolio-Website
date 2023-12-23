@@ -1,36 +1,65 @@
 import { hackreactor, ethica, fontana } from "../assets/images";
 import {
     car,
+    python,
+    postgresql,
+    django,
+    fastapi,
     contact,
     css,
-    estate,
-    express,
     git,
     github,
     html,
     javascript,
     linkedin,
     mongodb,
-    motion,
-    mui,
     nextjs,
     nodejs,
-    pricewise,
     react,
     redux,
-    sass,
     snapgram,
     summiz,
     tailwindcss,
-    threads,
-    typescript
+    websocket,
+    threejs,
+    docker
 } from "../assets/icons";
 
 export const skills = [
     {
+        imageUrl: javascript,
+        name: "JavaScript",
+        type: "Frontend",
+    },
+    {
+        imageUrl: python,
+        name: "Python",
+        type: "Backend",
+    },
+    {
+        imageUrl: html,
+        name: "HTML",
+        type: "Frontend",
+    },
+    {
         imageUrl: css,
         name: "CSS",
         type: "Frontend",
+    },
+    {
+        imageUrl: react,
+        name: "React",
+        type: "Frontend",
+    },
+    {
+        imageUrl: fastapi,
+        name: "Fastapi",
+        type: "Backend",
+    },
+    {
+        imageUrl: django,
+        name: "Django",
+        type: "Backend",
     },
     {
         imageUrl: git,
@@ -43,24 +72,19 @@ export const skills = [
         type: "Version Control",
     },
     {
-        imageUrl: html,
-        name: "HTML",
-        type: "Frontend",
+        imageUrl: docker,
+        name: "Docker",
+        type: "Containerization",
     },
     {
-        imageUrl: javascript,
-        name: "JavaScript",
-        type: "Frontend",
+        imageUrl: postgresql,
+        name: "PostgreSQL",
+        type: "Database",
     },
     {
         imageUrl: mongodb,
         name: "MongoDB",
         type: "Database",
-    },
-    {
-        imageUrl: mui,
-        name: "Material-UI",
-        type: "Frontend",
     },
     {
         imageUrl: nextjs,
@@ -73,9 +97,9 @@ export const skills = [
         type: "Backend",
     },
     {
-        imageUrl: react,
-        name: "React",
-        type: "Frontend",
+        imageUrl: threejs,
+        name: "Three.js",
+        type: "Backend",
     },
     {
         imageUrl: redux,
@@ -83,15 +107,15 @@ export const skills = [
         type: "State Management",
     },
     {
+        imageUrl: websocket,
+        name: "Websocket",
+        type: "Backend",
+    },
+    {
         imageUrl: tailwindcss,
         name: "Tailwind CSS",
         type: "Frontend",
     },
-    // {
-    //     imageUrl: typescript,
-    //     name: "TypeScript",
-    //     type: "Frontend",
-    // }
 ];
 
 export const experiences = [
