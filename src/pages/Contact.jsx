@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 
-import Fox from '../models/Fox';
+import Astronaut from '../models/astronaut';
 import useAlert from '../hooks/useAlert';
 
 const Contact = () => {
@@ -13,19 +13,19 @@ const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const { alert, showAlert, hideAlert } = useAlert();
   const [loading, setLoading] = useState(false);
-  const [currentAnimation, setCurrentAnimation] = useState("idle");
+  const [currentAnimation, setCurrentAnimation] = useState("Static Pose");
 
   const handleChange = ({ target: { name, value } }) => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleFocus = () => setCurrentAnimation("walk");
-  const handleBlur = () => setCurrentAnimation("idle");
+  const handleFocus = () => setCurrentAnimation("Armature Astronaut|Armature AstronautAction");
+  const handleBlur = () => setCurrentAnimation("Static Pose");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    setCurrentAnimation("hit");
+    setCurrentAnimation("Armature Astronaut|Armature AstronautAction");
 
     emailjs
       .send(
@@ -51,7 +51,7 @@ const Contact = () => {
 
           setTimeout(() => {
             hideAlert(false);
-            setCurrentAnimation("idle");
+            setCurrentAnimation("Static Pose");
             setForm({
               name: "",
               email: "",
@@ -62,7 +62,7 @@ const Contact = () => {
         (error) => {
           setLoading(false);
           console.error(error);
-          setCurrentAnimation("idle");
+          setCurrentAnimation("Static Pose");
 
           showAlert({
             show: true,
@@ -77,7 +77,7 @@ const Contact = () => {
     <section className='relative flex lg:flex-row flex-col max-container'>
       {alert.show && <Alert {...alert} />}
 
-      <div className='flex-1 min-w-[50%] flex flex-col'>
+      <div className='flex-1 min-w-[40%] flex flex-col'>
         <h1 className='head-text'>Get in Touch</h1>
 
         <form
@@ -148,22 +148,22 @@ const Contact = () => {
             far: 1000,
           }}
         >
-          <directionalLight position={[0, 0, 1]} intensity={2.5} />
-          <ambientLight intensity={1} />
-          <pointLight position={[5, 10, 0]} intensity={2} />
+          <directionalLight position={[-1, 7, -2]} intensity={0.8} />
+          <ambientLight intensity={0.2} />
+          <pointLight position={[0.1, 1.2, -0.2]} intensity={0.1} />
           <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
+            position={[1, 1.6, 0.2]}
+            angle={3}
             penumbra={1}
-            intensity={2}
+            intensity={1}
           />
 
           <Suspense fallback={<Loader />}>
-            <Fox
+            <Astronaut
               currentAnimation={currentAnimation}
-              position={[0.5, 0.35, 0]}
-              rotation={[12.629, -0.6, 0]}
-              scale={[0.5, 0.5, 0.5]}
+              position={[0, 0, -1]}
+              rotation={[12.9, 0, 0]}
+              scale={[6, 6, 6]}
             />
           </Suspense>
         </Canvas>
