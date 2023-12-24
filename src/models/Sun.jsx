@@ -45,13 +45,11 @@ const Sun = ({ setCurrentStage }) => {
       newBounds = {
         x: size.width / 50,
         y: size.height / 50,
-        // z: Math.min(size.width, size.height) / 50
       };
     } else {
       newBounds = {
         x: size.width / 150,
         y: size.height / 150,
-        // z: Math.min(size.width, size.height) / 100
       };
     }
     setBounds(newBounds); // Update the bounds state
@@ -69,20 +67,16 @@ const Sun = ({ setCurrentStage }) => {
 
       if (!hasBeenDragged) {
         // Set the stable position to the sun's current position when drag starts
-        setStablePosition({ 
-          // x: xPosition,
+        setStablePosition({
           x: sunRef.current.position.x,
-          // y: yPosition,
           y: sunRef.current.position.y,
           z: sunRef.current.position.z
         });
-        setHasBeenDragged(true); // Indicate that the sun has been dragged
+        setHasBeenDragged(true);
       }
       // Update position while dragging
       sunRef.current.position.x = xPosition;
       sunRef.current.position.y = yPosition;
-      // sunRef.current.position.x = stablePosition.x + x / scaleFactor;
-      // sunRef.current.position.y = stablePosition.y - y / scaleFactor;
     } else {
       // Update velocity when drag ends
       setVelocity({
@@ -90,7 +84,7 @@ const Sun = ({ setCurrentStage }) => {
         y: -my / scaleFactor,
       });
     }
-  }, { pointerEvents: true }); // Enable pointer events for the drag
+  }, { pointerEvents: true });
   
 
   // Animation frame update
