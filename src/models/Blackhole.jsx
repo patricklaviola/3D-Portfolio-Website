@@ -11,9 +11,6 @@ import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
-
-
-
 import blackHoleScene from "../assets/3d/blackhole.glb";
 
 const BlackHole = ({
@@ -85,16 +82,13 @@ const BlackHole = ({
   // Handle scroll event
   const handleScroll = (event) => {
     event.stopPropagation();
-    // setIsRotatingRight(true);
 
     // Determine the scroll delta
     const scrollDelta = event.deltaY;
 
-    if (scrollDelta > 0) {
-      setIsRotatingRight(true);
-    } else {
-      setIsRotatingLeft(true);
-    }
+    // Update rotation direction states immediately
+    setIsRotatingRight(scrollDelta > 0);
+    setIsRotatingLeft(scrollDelta < 0);
 
     // Adjust the factor based on the desired sensitivity
     const rotationChange = scrollDelta * 0.0001 * Math.PI;
@@ -108,13 +102,7 @@ const BlackHole = ({
     // Determine the direction for the animation based on scroll direction
     const action = actions['Take 001'];
     if (action) {
-      if (scrollDelta > 0) {
-        // Scrolling down
-        action.timeScale = 2;
-      } else {
-        // Scrolling up
-        action.timeScale = -2;
-      }
+      action.timeScale = scrollDelta > 0 ? 2 : -2;
       action.play();
     }
 
@@ -146,9 +134,6 @@ const BlackHole = ({
     // Add event listeners for pointer and keyboard events
     const blackHole = blackHoleRef.current;
     if (blackHole) {
-      // blackHole.addEventListener("pointerdown", handlePointerDown);
-      // blackHole.addEventListener("pointerup", handlePointerUp);
-      // blackHole.addEventListener("pointermove", handlePointerMove);
       window.addEventListener("keydown", handleKeyDown);
       window.addEventListener("keyup", handleKeyUp);
       window.addEventListener("wheel", handleScroll);
@@ -157,9 +142,6 @@ const BlackHole = ({
     // Remove event listeners when component unmounts
     return () => {
       if (blackHole) {
-        // blackHole.removeEventListener("pointerdown", handlePointerDown);
-        // blackHole.removeEventListener("pointerup", handlePointerUp);
-        // blackHole.removeEventListener("pointermove", handlePointerMove);
         window.removeEventListener("keydown", handleKeyDown);
         window.removeEventListener("keyup", handleKeyUp);
         window.removeEventListener("wheel", handleScroll);
@@ -222,9 +204,6 @@ const BlackHole = ({
       ref={blackHoleRef}
       {...props} 
       dispose={null}
-      // onPointerDown={handlePointerDown}
-      // onPointerUp={handlePointerUp}
-      // onPointerMove={handlePointerMove}
       onScroll={handleScroll}
     >
       <group name="Sketchfab_Scene">
