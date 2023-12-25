@@ -27,9 +27,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
 
-  useEffect(() => {
-  }, [sunDragging])
-
 
   useEffect(() => {
     if (hasBeenDragged) {
@@ -99,13 +96,13 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     // Check if the sun has not been dragged
     if (!hasBeenDragged) {
       // Define the parameters of the elliptical path
-      const a = 9; // Semi-major axis for the x-direction
+      const a = 11; // Semi-major axis for the x-direction
       const b = 0; // Semi-minor axis for the y-direction
-      const c = 12; // Semi-axis for the z-direction
+      const c = 13; // Semi-axis for the z-direction
       const speed = 0.5; // Speed of movement
       // Calculate the elliptical path
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
-      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) + 2; // Add vertical offset
+      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 2; // Add vertical offset
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 16;
     }
     // Apply the calculated velocity to the sun's position

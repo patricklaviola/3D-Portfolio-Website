@@ -176,10 +176,8 @@ const BlackHole = ({
   };
   
   
-
   useEffect(() => {
     const action = actions['Take 001'];
-
     if (action) {
       action.timeScale = 0.5;
       action.play();
