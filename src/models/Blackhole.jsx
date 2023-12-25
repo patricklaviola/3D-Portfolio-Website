@@ -78,7 +78,7 @@ const BlackHole = ({
 
   // Handle scroll event
   const handleScroll = (event) => {
-    // event.stopPropagation();
+    event.stopPropagation();
 
     // Determine the scroll delta
     const scrollDelta = event.deltaY;
@@ -115,7 +115,7 @@ const BlackHole = ({
       }
     }, 100); // Adjust the timeout duration as needed
   };
-
+  
   // Handle touch start event
   const handleTouchStart = (event) => {
     if (event.touches.length === 1) {
@@ -123,25 +123,57 @@ const BlackHole = ({
       initialTouchYRef.current = event.touches[0].clientY;
     }
   };
-
+  
   // Handle touch move event
   const handleTouchMove = (event) => {
     if (event.touches.length === 1) {
-      // Prevent default touch action (like scrolling)
       event.preventDefault();
-  
+      event.stopPropagation();
+      
       const currentTouchY = event.touches[0].clientY;
       // Calculate the touch movement delta
       const deltaY = initialTouchYRef.current - currentTouchY;
       // Update the initial touch position for the next movement
       initialTouchYRef.current = currentTouchY;
-  
-      // Call handleScroll with a custom event object
-      handleScroll({ deltaY: deltaY });
+    
+      // Determine the scroll delta
+      const scrollDelta = deltaY;
+    
+      // Update rotation direction states immediately
+      setIsRotatingRight(scrollDelta > 0);
+      setIsRotatingLeft(scrollDelta < 0);
+    
+      // Adjust the factor based on the desired sensitivity
+      const rotationChange = scrollDelta * 0.001 * Math.PI;
+    
+      // Update the black hole's rotation
+      blackHoleRef.current.rotation.y += rotationChange;
+    
+      // Update the rotation speed
+      rotationSpeed.current = rotationChange;
+    
+      // Determine the direction for the animation based on scroll direction
+      const action = actions['Take 001'];
+      if (action) {
+        action.timeScale = scrollDelta > 0 ? 2 : -2;
+        action.play();
+      }
+    
+      // Clear any existing timeout
+      clearTimeout(rotationEndTimeoutRef.current);
+    
+      // Set a new timeout
+      rotationEndTimeoutRef.current = setTimeout(() => {
+        setIsRotatingRight(false);
+        setIsRotatingLeft(false);
+        if (action) {
+          action.timeScale = 0.5;
+        }
+      }, 100); // Adjust the timeout duration as needed
     }
   };
   
-
+  
 
   useEffect(() => {
     const action = actions['Take 001'];
