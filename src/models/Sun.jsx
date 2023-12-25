@@ -12,7 +12,7 @@ import { useDrag } from 'react-use-gesture'; // Importing a hook for handling dr
 import sunScene from '../assets/3d/sun.glb'; // Importing a GLTF model of the sun from assets
 
 // Sun component definition
-const Sun = ({ setCurrentStage }) => {
+const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const sunRef = useRef(); // Creating a ref to refer to the 3D object in the scene
   const { scene, animations } = useGLTF(sunScene); // Loading the sun scene and its animations using useGLTF hook
   const { actions } = useAnimations(animations, sunRef); // Setting up animations for the sun model
@@ -26,6 +26,9 @@ const Sun = ({ setCurrentStage }) => {
   useEffect(() => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
+
+  useEffect(() => {
+  }, [sunDragging])
 
 
   useEffect(() => {
@@ -63,9 +66,12 @@ const Sun = ({ setCurrentStage }) => {
     
   
     if (down) {
+      // Update position while dragging
       sunRef.current.position.x = xPosition;
       sunRef.current.position.y = yPosition;
-
+      if (!sunDragging) {
+        setSunDragging(true);
+      }
       if (!hasBeenDragged) {
         // Set the stable position to the sun's current position when drag starts
         setStablePosition({
@@ -75,15 +81,15 @@ const Sun = ({ setCurrentStage }) => {
         });
         setHasBeenDragged(true);
       }
-      // Update position while dragging
-      sunRef.current.position.x = xPosition;
-      sunRef.current.position.y = yPosition;
+      // sunRef.current.position.x = xPosition;
+      // sunRef.current.position.y = yPosition;
     } else {
       // Update velocity when drag ends
       setVelocity({
         x: mx / scaleFactor,
         y: -my / scaleFactor,
       });
+      setSunDragging(false);
     }
   }, { pointerEvents: true });
   

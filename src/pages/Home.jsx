@@ -96,6 +96,7 @@ const Home = () => {
           <Sun
             setCurrentStage={setCurrentStage}
             setSunDragging={setSunDragging}
+            sunDragging={sunDragging}
           />
           <Rocket />
         </Suspense>

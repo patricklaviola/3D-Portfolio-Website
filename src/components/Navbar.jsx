@@ -11,9 +11,21 @@ const Navbar = () => {
         }
     };
 
+    const handleReload = () => {
+        if (location.pathname === '/') {
+            window.location.reload();
+        }
+    };
+
+
+
     return (
         <header className="header">
-            <NavLink to="/" className="w-20 h-10 rounded-lg bg-white flex items-center justify-center font-bold shadow-md">
+            <NavLink 
+                to="/" 
+                className="w-20 h-10 rounded-lg bg-white flex items-center justify-center font-bold shadow-md"
+                onClick={handleReload}
+            >
                 <div className="flex items-center justify-center space-x-2">
                     {/* <img src="../src/assets/images/grapes.png" alt="grapes" className="h-7 w-7 rounded-full" /> */}
                     <p className="blue-gradient_text">

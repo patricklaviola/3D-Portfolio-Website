@@ -6,23 +6,13 @@ const Loader = () => {
     <Html
       as='div'
       center
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
+      className="flex justify-center items-center flex-col"
     >
       <span className='loader'></span>
       <p
-        style={{
-          fontSize: 14,
-          color: "#1c232e",
-          fontWeight: 800,
-          marginTop: 40,
-        }}
+        className="text-lg text-gray-800 font-bold mt-80 whitespace-nowrap"
       >
-        {progress.toFixed(2)}%
+        Loading 3D models ( {progress.toFixed(2)}% )
       </p>
     </Html>
   );

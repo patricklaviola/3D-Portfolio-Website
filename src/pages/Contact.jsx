@@ -150,9 +150,9 @@ const Contact = () => {
         >
           <directionalLight position={[-1, 7, -2]} intensity={0.8} />
           <ambientLight intensity={0.2} />
-          <pointLight position={[0.1, 1.2, -0.2]} intensity={0.1} />
+          <pointLight position={[0.1, 0, -0.2]} intensity={1} />
           <spotLight
-            position={[1, 1.6, 0.2]}
+            position={[0, -0.2, 0.4]}
             angle={3}
             penumbra={1}
             intensity={1}
@@ -161,9 +161,9 @@ const Contact = () => {
           <Suspense fallback={<Loader />}>
             <Astronaut
               currentAnimation={currentAnimation}
-              position={[0, 0, -1]}
-              rotation={[12.9, 0, 0]}
-              scale={[6, 6, 6]}
+              position={[0, -1, 0]}
+              rotation={[12.8, 1, 0]}
+              scale={[7, 7, 7]}
             />
           </Suspense>
         </Canvas>

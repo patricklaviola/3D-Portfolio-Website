@@ -20,6 +20,7 @@ const BlackHole = ({
     setIsRotatingLeft,
     setCurrentStage,
     currentFocusPoint,
+    sunDragging,
     ...props
 }) => {
 
