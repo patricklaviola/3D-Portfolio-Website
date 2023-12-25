@@ -23,7 +23,6 @@ const Sun = ({ setCurrentStage }) => {
   const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
   
 
-  // Play the initial animation on component mount
   useEffect(() => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
@@ -43,8 +42,8 @@ const Sun = ({ setCurrentStage }) => {
     // Calculate bounds based on device type
     if (isMobile) {
       newBounds = {
-        x: size.width / 50,
-        y: size.height / 50,
+        x: size.width / 120,
+        y: size.height / 120,
       };
     } else {
       newBounds = {
@@ -56,10 +55,12 @@ const Sun = ({ setCurrentStage }) => {
   }, [size]);
 
 
-  const bind = useDrag(({ xy: [x, y], down, movement: [mx, my] }) => {
-    const scaleFactor = 800; // A constant to scale the drag effect
+  const bind = useDrag(({ xy: [x, y], down, movement: [mx, my], event }) => {
+    const isTouch = event.touches && event.touches.length > 0;
+    const scaleFactor = isTouch ? 400 : 800; // A constant to scale the drag effect
     const xPosition = (x - size.width / 2) / 60;
     const yPosition = (size.height / 2 - y) / 60;
+    
   
     if (down) {
       sunRef.current.position.x = xPosition;
@@ -112,21 +113,23 @@ const Sun = ({ setCurrentStage }) => {
     }));
 
     // Bounds checking and correction
-    if (sunRef.current.position.x > bounds.x) {
-      sunRef.current.position.x = bounds.x;
-      setVelocity(v => ({ ...v, x: -Math.abs(v.x) }));
-    } else if (sunRef.current.position.x < -bounds.x) {
-      sunRef.current.position.x = -bounds.x;
-      setVelocity(v => ({ ...v, x: Math.abs(v.x) }));
+    if (hasBeenDragged) {
+      if (sunRef.current.position.x > bounds.x) {
+        sunRef.current.position.x = bounds.x;
+        setVelocity(v => ({ ...v, x: -Math.abs(v.x) }));
+      } else if (sunRef.current.position.x < -bounds.x) {
+        sunRef.current.position.x = -bounds.x;
+        setVelocity(v => ({ ...v, x: Math.abs(v.x) }));
+      }
+  
+      if (sunRef.current.position.y > bounds.y) {
+        sunRef.current.position.y = bounds.y;
+        setVelocity(v => ({ ...v, y: -Math.abs(v.y) }));
+      } else if (sunRef.current.position.y < -bounds.y) {
+        sunRef.current.position.y = -bounds.y;
+        setVelocity(v => ({ ...v, y: Math.abs(v.y) }));
+      }
     }
-
-    if (sunRef.current.position.y > bounds.y) {
-      sunRef.current.position.y = bounds.y;
-      setVelocity(v => ({ ...v, y: -Math.abs(v.y) }));
-    } else if (sunRef.current.position.y < -bounds.y) {
-      sunRef.current.position.y = -bounds.y;
-      setVelocity(v => ({ ...v, y: Math.abs(v.y) }));
-    }    
   });
 
 

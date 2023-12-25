@@ -21,6 +21,7 @@ const Home = () => {
   const [isRotatingRight, setIsRotatingRight] = useState(false);
   const [isRotatingLeft, setIsRotatingLeft] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const [sunDragging, setSunDragging] = useState(false);
 
 
   useEffect(() => {
@@ -87,12 +88,14 @@ const Home = () => {
             setIsRotatingRight={setIsRotatingRight}
             setIsRotatingLeft={setIsRotatingLeft}
             setCurrentStage={setCurrentStage}
+            sunDragging={sunDragging}
             position={blackHolePosition}
             rotation={[0.1, 0, 0.1]}
             scale={blackHoleScale}
           />
           <Sun
             setCurrentStage={setCurrentStage}
+            setSunDragging={setSunDragging}
           />
           <Rocket />
         </Suspense>

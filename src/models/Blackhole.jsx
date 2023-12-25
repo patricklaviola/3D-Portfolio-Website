@@ -24,17 +24,13 @@ const BlackHole = ({
 }) => {
 
   const blackHoleRef = useRef();
-  // Get access to the Three.js renderer and viewport
   const { gl } = useThree();
   const { nodes, materials, animations } = useGLTF(blackHoleScene);
   const { actions } = useAnimations(animations, blackHoleRef);
-
-
-  // Use a ref for rotation speed
   const rotationSpeed = useRef(0);
-  // Define a damping factor to control rotation damping
-  const dampingFactor = 0.95;
+  const initialTouchYRef = useRef(0);
 
+  const dampingFactor = 0.95;
 
   // Handle keydown events
   const handleKeyDown = (event) => {
@@ -81,7 +77,7 @@ const BlackHole = ({
 
   // Handle scroll event
   const handleScroll = (event) => {
-    event.stopPropagation();
+    // event.stopPropagation();
 
     // Determine the scroll delta
     const scrollDelta = event.deltaY;
@@ -119,6 +115,32 @@ const BlackHole = ({
     }, 100); // Adjust the timeout duration as needed
   };
 
+  // Handle touch start event
+  const handleTouchStart = (event) => {
+    if (event.touches.length === 1) {
+      // Store the initial touch position
+      initialTouchYRef.current = event.touches[0].clientY;
+    }
+  };
+
+  // Handle touch move event
+  const handleTouchMove = (event) => {
+    if (event.touches.length === 1) {
+      // Prevent default touch action (like scrolling)
+      event.preventDefault();
+  
+      const currentTouchY = event.touches[0].clientY;
+      // Calculate the touch movement delta
+      const deltaY = initialTouchYRef.current - currentTouchY;
+      // Update the initial touch position for the next movement
+      initialTouchYRef.current = currentTouchY;
+  
+      // Call handleScroll with a custom event object
+      handleScroll({ deltaY: deltaY });
+    }
+  };
+  
+
 
   useEffect(() => {
     const action = actions['Take 001'];
@@ -137,6 +159,8 @@ const BlackHole = ({
       window.addEventListener("keydown", handleKeyDown);
       window.addEventListener("keyup", handleKeyUp);
       window.addEventListener("wheel", handleScroll);
+      window.addEventListener("touchstart", handleTouchStart, { passive: true });
+      window.addEventListener("touchmove", handleTouchMove, { passive: false });
     }
 
     // Remove event listeners when component unmounts
@@ -145,6 +169,8 @@ const BlackHole = ({
         window.removeEventListener("keydown", handleKeyDown);
         window.removeEventListener("keyup", handleKeyUp);
         window.removeEventListener("wheel", handleScroll);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
       }
     };
   }, [gl, handleScroll]);
