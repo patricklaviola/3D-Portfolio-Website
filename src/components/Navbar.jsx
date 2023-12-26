@@ -26,7 +26,6 @@ const Navbar = () => {
                 onClick={handleReload}
             >
                 <div className="flex items-center justify-center space-x-2">
-                    {/* <img src="../src/assets/images/grapes.png" alt="grapes" className="h-7 w-7 rounded-full" /> */}
                     <p className="blue-gradient_text">
                         PLV
                     </p>
@@ -36,10 +35,10 @@ const Navbar = () => {
                 <NavLink to="/about" className={getNavLinkClass()}>
                     About
                 </NavLink>
-                <NavLink to="/Projects" className={getNavLinkClass()}>
+                <NavLink to="/projects" className={getNavLinkClass()}>
                     Projects
                 </NavLink>
-                <NavLink to="/Contact" className={getNavLinkClass()}>
+                <NavLink to="/contact" className={getNavLinkClass()}>
                     Contact
                 </NavLink>
             </nav>

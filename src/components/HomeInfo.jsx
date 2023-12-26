@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Tilt } from 'react-tilt';
 import { Link } from 'react-router-dom';
 import { arrow } from '../assets/icons';
 import { motion } from 'framer-motion';
-import { fadeIn, fadeOut } from '../utils/motion';
+import { fadeIn } from '../utils/motion';
 
 
 
