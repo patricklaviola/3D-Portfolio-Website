@@ -169,6 +169,7 @@ const Contact = () => {
           </Canvas>
         </div>
       </section>
+      <hr className="border-slate-200"/>
       <Footer />
     </>
   );
