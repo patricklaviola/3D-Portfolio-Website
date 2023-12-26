@@ -42,8 +42,8 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     // Calculate bounds based on device type
     if (isMobile) {
       newBounds = {
-        x: size.width / 120,
-        y: size.height / 120,
+        x: size.width / 150,
+        y: size.height / 150,
       };
     } else {
       newBounds = {
