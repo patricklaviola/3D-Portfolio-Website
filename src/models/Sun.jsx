@@ -27,13 +27,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   useEffect(() => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
-
-
-  useEffect(() => {
-    if (hasBeenDragged) {
-      setCurrentStage(null);
-    }
-  }, [hasBeenDragged])
   
 
   // Update bounds based on screen size
@@ -66,6 +59,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       // Update position while dragging
       sunRef.current.position.x = xPosition;
       sunRef.current.position.y = yPosition;
+      setCurrentStage(null);
 
       if (!sunDragging) {
         setSunDragging(true);
