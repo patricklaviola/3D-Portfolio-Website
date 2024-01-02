@@ -21,6 +21,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const { size } = useThree(); // Getting the size of the canvas from react-three-fiber's context
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 }) // State to store bounds for sun's movement
   const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
+  const isMobile = window.innerWidth < 768; // Check if the screen is a mobile device
   
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
 
   // Update bounds based on screen size
   useEffect(() => {
-    const isMobile = window.innerWidth < 768; // Check if the screen is a mobile device
     let newBounds; // Variable to hold the new bounds
     // Calculate bounds based on device type
     if (isMobile) {
@@ -66,6 +66,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       // Update position while dragging
       sunRef.current.position.x = xPosition;
       sunRef.current.position.y = yPosition;
+
       if (!sunDragging) {
         setSunDragging(true);
       }
@@ -78,8 +79,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
         });
         setHasBeenDragged(true);
       }
-      // sunRef.current.position.x = xPosition;
-      // sunRef.current.position.y = yPosition;
     } else {
       // Update velocity when drag ends
       setVelocity({
@@ -104,6 +103,10 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
       sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 2; // Add vertical offset
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 16;
+    } else if (sunRef.current.position.z < -10 && isMobile) {
+      sunRef.current.position.z = -4;
+    } else if (sunRef.current.position.z < -10 && !isMobile) {
+      sunRef.current.position.z = -6;
     }
     // Apply the calculated velocity to the sun's position
     sunRef.current.position.x += velocity.x;
@@ -149,4 +152,3 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
 }
 
 export default Sun;
-
