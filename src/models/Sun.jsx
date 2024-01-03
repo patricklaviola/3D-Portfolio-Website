@@ -11,6 +11,7 @@ import { useFrame, useThree } from '@react-three/fiber'; // Importing hooks from
 import { useDrag } from 'react-use-gesture'; // Importing a hook for handling drag gestures
 import sunScene from '../assets/3d/sun.glb'; // Importing a GLTF model of the sun from assets
 
+
 // Sun component definition
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const sunRef = useRef(); // Creating a ref to refer to the 3D object in the scene
@@ -21,9 +22,14 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const { size } = useThree(); // Getting the size of the canvas from react-three-fiber's context
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 }) // State to store bounds for sun's movement
   const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
-  const isMobile = window.innerWidth < 768; // Check if the screen is a mobile device
+  const isMobile = window.innerWidth <= 768; // Check if the screen is a mobile device
+  const isVeryLowRes = window.innerWidth > 768 && window.innerWidth < 1200;
+  const isLowRes = window.innerWidth >= 1200 && window.innerWidth < 1600;
+  const isMidRes = window.innerWidth >= 1600 && window.innerWidth < 2100;
+  const isHighRes = window.innerWidth >= 2100 && window.innerWidth < 2800;
+  const isVeryHighRes = window.innerWidth >= 2800;
   
-
+  
   useEffect(() => {
     actions['Take 001'].play(); // Playing the first animation on load
   }, [])
@@ -35,17 +41,56 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     // Calculate bounds based on device type
     if (isMobile) {
       newBounds = {
-        x: size.width / 150,
-        y: size.height / 150,
+        x: size.width / 120,
+        y: size.height / 120,
       };
+      // console.log("IS MOBILE")
+
+    } else if (isVeryLowRes) {
+      newBounds = {
+        x: size.width / 90,
+        y: size.height / 90,
+      };
+      // console.log("IS VERY LOW RES")
+
+    } else if (isLowRes) {
+      newBounds = {
+        x: size.width / 110,
+        y: size.height / 110,
+      };
+      // console.log("IS LOW RES")
+
+    } else if (isMidRes) {
+      newBounds = {
+        x: size.width / 140,
+        y: size.height / 140,
+      };
+      // console.log("IS MID RES")
+
+    } else if (isHighRes) {
+      newBounds = {
+        x: size.width / 190,
+        y: size.height / 190,
+      };
+      // console.log("IS HIGH RES")
+
+    } else if (isVeryHighRes) {
+      newBounds = {
+        x: size.width / 250,
+        y: size.height / 250,
+      };
+      // console.log("IS VERY HIGH RES")
+
     } else {
       newBounds = {
-        x: size.width / 150,
-        y: size.height / 150,
+        x: size.width / 140,
+        y: size.height / 140,
       };
+      // console.log("IS NOT CATEGORIZED")
+
     }
     setBounds(newBounds); // Update the bounds state
-  }, [size]);
+  }, [window]);
 
 
   const bind = useDrag(({ xy: [x, y], down, movement: [mx, my], event }) => {
@@ -90,16 +135,16 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     if (!hasBeenDragged) {
       // Define the parameters of the elliptical path
       const a = 11; // Semi-major axis for the x-direction
-      const b = 0; // Semi-minor axis for the y-direction
-      const c = 13; // Semi-axis for the z-direction
+      const b = -2; // Semi-minor axis for the y-direction
+      const c = 10; // Semi-axis for the z-direction
       const speed = 0.5; // Speed of movement
       // Calculate the elliptical path
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
-      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 2; // Add vertical offset
+      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1; // Add vertical offset
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 16;
-    } else if (sunRef.current.position.z < -10 && isMobile) {
-      sunRef.current.position.z = -4;
-    } else if (sunRef.current.position.z < -10 && !isMobile) {
+    } else if (sunRef.current.position.z < -6 && isMobile) {
+      sunRef.current.position.z = -6;
+    } else if (sunRef.current.position.z < -6 && !isMobile) {
       sunRef.current.position.z = -6;
     }
     // Apply the calculated velocity to the sun's position
