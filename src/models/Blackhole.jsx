@@ -88,7 +88,7 @@ const BlackHole = ({
     setIsRotatingLeft(scrollDelta < 0);
 
     // Adjust the factor based on the desired sensitivity
-    const rotationChange = scrollDelta * 0.0001 * Math.PI;
+    const rotationChange = scrollDelta * 0.0003 * Math.PI;
 
     // Update the black hole's rotation
     blackHoleRef.current.rotation.y += rotationChange;

@@ -94,9 +94,9 @@ const renderContent = {
                     <br />
                     <span style={{ fontSize: 'smaller' }}>
                         <em>
-                        <strong className='green-pink-gradient-text'> Scroll </strong>↕️
+                        <strong className='green-pink-gradient-text'> Scroll </strong>
                         or
-                        <strong className='green-pink-gradient-text'> long-press arrow keys </strong> ↔️ ↕️
+                        <strong className='green-pink-gradient-text'> long-press arrow keys </strong>
                         to see more content.
                         </em>
                         <br />
@@ -117,7 +117,7 @@ const renderContent = {
                 <InfoBox
                 text={
                     <div>
-                        I used to travel the world selling <span className='green-pink-gradient-text'>fine Italian wines</span>🍷                                
+                        I travelled the world selling <span className='green-pink-gradient-text'>fine Italian wines</span>🍷                                
                         <br />
                         <br />
                         Now I'm a <span className='green-pink-gradient-text'>full stack web developer </span>💻
@@ -129,14 +129,29 @@ const renderContent = {
     ),
     3: (
         <InfoBox
-            text="I'm avidly learning new technologies and working on new projects"
+            text={
+                <div>
+                    I'm avidly learning new technologies
+                    <br />
+                    <br />
+                    and working on new <span className='green-pink-gradient-text'>projects</span>
+                </div>
+            }
             link="/projects"
             btnText="See my work"
         />
     ),
     4: (
         <InfoBox
-            text="Looking for a dev? I'm just a few keystrokes away."
+            // text="Looking for a developer? I'm just a few keystrokes away."
+            text={
+                <div>
+                    Looking for a developer?
+                    <br />
+                    <br />
+                    I'm just a few keystrokes away.
+                </div>
+            }
             link="/contact"
             btnText="Let's connect"
         />

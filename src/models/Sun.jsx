@@ -22,12 +22,16 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const { size } = useThree(); // Getting the size of the canvas from react-three-fiber's context
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 }) // State to store bounds for sun's movement
   const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
-  const isMobile = window.innerWidth <= 768; // Check if the screen is a mobile device
-  const isVeryLowRes = window.innerWidth > 768 && window.innerWidth < 1200;
-  const isLowRes = window.innerWidth >= 1200 && window.innerWidth < 1600;
-  const isMidRes = window.innerWidth >= 1600 && window.innerWidth < 2100;
-  const isHighRes = window.innerWidth >= 2100 && window.innerWidth < 2800;
-  const isVeryHighRes = window.innerWidth >= 2800;
+
+
+  const isMobile = window.innerWidth <= 768 && window.innerWidth <= window.innerHeight; // Check if the screen is a mobile device
+  const isMobileLandscape = window.innerWidth <= 768 && window.innerWidth >= window.innerHeight;
+  const isPortrait = window.innerWidth > 768 && window.innerWidth <= window.innerHeight;
+  const isVeryLowRes = window.innerWidth > 768 && window.innerWidth < 1200 && window.innerWidth >= window.innerHeight;
+  const isLowRes = window.innerWidth >= 1200 && window.innerWidth < 1600 && window.innerWidth >= window.innerHeight;
+  const isMidRes = window.innerWidth >= 1600 && window.innerWidth < 2100 && window.innerWidth >= window.innerHeight;
+  const isHighRes = window.innerWidth >= 2100 && window.innerWidth < 2800 && window.innerWidth >= window.innerHeight;
+  const isVeryHighRes = window.innerWidth >= 2800 && window.innerWidth >= window.innerHeight;
   
   
   useEffect(() => {
@@ -45,51 +49,56 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
         y: size.height / 120,
       };
       // console.log("IS MOBILE")
-
+    } else if (isMobileLandscape) {
+      newBounds = {
+        x: size.width / 60,
+        y: size.height / 60,
+      };
+      // console.log("IS MOBILE LANDSCAPE")
     } else if (isVeryLowRes) {
       newBounds = {
         x: size.width / 90,
         y: size.height / 90,
       };
       // console.log("IS VERY LOW RES")
-
+    } else if (isPortrait) {
+      newBounds = {
+        x: size.width / 140,
+        y: size.height / 140,
+      };
+      // console.log("IS PORTRAIT")
     } else if (isLowRes) {
       newBounds = {
         x: size.width / 110,
         y: size.height / 110,
       };
       // console.log("IS LOW RES")
-
     } else if (isMidRes) {
       newBounds = {
         x: size.width / 140,
         y: size.height / 140,
       };
       // console.log("IS MID RES")
-
     } else if (isHighRes) {
       newBounds = {
         x: size.width / 190,
         y: size.height / 190,
       };
       // console.log("IS HIGH RES")
-
     } else if (isVeryHighRes) {
       newBounds = {
         x: size.width / 250,
         y: size.height / 250,
       };
       // console.log("IS VERY HIGH RES")
-
     } else {
       newBounds = {
         x: size.width / 140,
         y: size.height / 140,
       };
       // console.log("IS NOT CATEGORIZED")
-
     }
-    setBounds(newBounds); // Update the bounds state
+    setBounds(newBounds);
   }, [window]);
 
 
@@ -141,7 +150,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       // Calculate the elliptical path
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
       sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1; // Add vertical offset
-      sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 16;
+      sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 18;
     } else if (sunRef.current.position.z < -6 && isMobile) {
       sunRef.current.position.z = -6;
     } else if (sunRef.current.position.z < -6 && !isMobile) {

@@ -38,7 +38,7 @@ const Projects = () => {
                   rel="noopener noreferrer"
                   className="font-semibold text-blue-600"
                 >
-                  Live Link
+                  Repo Link
                 </Link>
                 <img src={arrow} alt="arrow" className="w-4 h-4 object-contain" />
               </div>

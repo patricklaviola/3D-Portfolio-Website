@@ -21,13 +21,13 @@ const Rocket = ({ isRotating, ...props }) => {
   
     useFrame(({ clock, camera }) => {
       // Update the Y position to simulate rocket-like motion using a sine wave
-      rocketRef.current.position.y = Math.sin(clock.elapsedTime) * 0.2 - 1;
+      rocketRef.current.position.y = Math.sin(clock.elapsedTime) * 0.3 - 0.9;
   
       // Check if the rocket reached a certain endpoint relative to the camera
-      if (rocketRef.current.position.x > camera.position.x + 0.5) {
+      if (rocketRef.current.position.x > camera.position.x + 0.1) {
         // Change direction to backward and rotate the rocket 180 degrees on the y-axis
         rocketRef.current.rotation.y = Math.PI;
-      } else if (rocketRef.current.position.x < camera.position.x - 0.2) {
+      } else if (rocketRef.current.position.x < camera.position.x - 0.8) {
         // Change direction to forward and reset the rocket's rotation
         rocketRef.current.rotation.y = 0;
       }
@@ -46,7 +46,7 @@ const Rocket = ({ isRotating, ...props }) => {
   
     return (
       // to create and display 3D objects
-      <mesh ref={rocketRef} position={[0, 0, 0]} scale={[0.002, 0.002, 0.002]}>
+      <mesh ref={rocketRef} position={[-0.5, 0, 0]} scale={[0.002, 0.002, 0.002]}>
         <primitive 
           object={scene}
           rotation={[0, 1.4, 0]}
