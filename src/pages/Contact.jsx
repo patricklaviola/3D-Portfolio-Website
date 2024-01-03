@@ -140,7 +140,7 @@ const Contact = () => {
             </button>
           </form>
         </div>
-        <div className='lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]'>
+        <div className='lg:w-1/2 w-full lg:h-[900px] md:h-[450px] h-[350px]'>
           <Canvas
             camera={{
               position: [0, 0, 5],
@@ -149,21 +149,21 @@ const Contact = () => {
               far: 1000,
             }}
           >
-            <directionalLight position={[-1, 7, -2]} intensity={0.8} />
+            <directionalLight position={[-1, 2, -2]} intensity={0.2} />
             <ambientLight intensity={0.2} />
-            <pointLight position={[0.1, 0, -0.2]} intensity={1} />
+            <pointLight position={[0, 2, -0.3]} intensity={0.4} />
             <spotLight
-              position={[0, -0.2, 0.4]}
+              position={[-0.2, 1.7, 0.4]}
               angle={3}
-              penumbra={1}
-              intensity={1}
+              penumbra={0.6}
+              intensity={0.4}
             />
             <Suspense fallback={<Loader />}>
               <Astronaut
                 currentAnimation={currentAnimation}
-                position={[0, -1, 0]}
+                position={[0, 0.3, 0]}
                 rotation={[12.8, 1, 0]}
-                scale={[7, 7, 7]}
+                scale={[4, 4, 4]}
               />
             </Suspense>
           </Canvas>
