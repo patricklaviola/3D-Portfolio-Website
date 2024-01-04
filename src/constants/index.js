@@ -17,7 +17,6 @@ import {
     nodejs,
     react,
     redux,
-    snapgram,
     summiz,
     tailwindcss,
     websocket,

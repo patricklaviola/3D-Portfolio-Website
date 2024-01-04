@@ -13,6 +13,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 import blackHoleScene from "../assets/3d/blackhole.glb";
 
+
 const BlackHole = ({
     isRotatingRight,
     isRotatingLeft,
@@ -30,10 +31,11 @@ const BlackHole = ({
   const { actions } = useAnimations(animations, blackHoleRef);
   const rotationSpeed = useRef(0);
   const initialTouchYRef = useRef(0);
-
+  const rotationEndTimeoutRef = useRef();
+  
   const dampingFactor = 0.95;
 
-  // Handle keydown events
+
   const handleKeyDown = (event) => {
     const action = actions['Take 001'];
 
@@ -60,7 +62,7 @@ const BlackHole = ({
     }
   };
 
-  // Handle keyup events
+
   const handleKeyUp = (event) => {
     const action = actions['Take 001'];
 
@@ -73,104 +75,76 @@ const BlackHole = ({
     }
   };
 
-  // Ref to store the timeout ID
-  const rotationEndTimeoutRef = useRef();
 
-  // Handle scroll event
   const handleScroll = (event) => {
     event.stopPropagation();
 
-    // Determine the scroll delta
     const scrollDelta = event.deltaY;
-
-    // Update rotation direction states immediately
     setIsRotatingRight(scrollDelta > 0);
     setIsRotatingLeft(scrollDelta < 0);
-
-    // Adjust the factor based on the desired sensitivity
-    const rotationChange = scrollDelta * 0.0003 * Math.PI;
-
-    // Update the black hole's rotation
+    const rotationChange = scrollDelta * 0.0002 * Math.PI;
     blackHoleRef.current.rotation.y += rotationChange;
-
-    // Update the rotation speed
     rotationSpeed.current = rotationChange;
 
-    // Determine the direction for the animation based on scroll direction
     const action = actions['Take 001'];
     if (action) {
       action.timeScale = scrollDelta > 0 ? 2 : -2;
       action.play();
     }
 
-    // Clear any existing timeout
     clearTimeout(rotationEndTimeoutRef.current);
 
-    // Set a new timeout
     rotationEndTimeoutRef.current = setTimeout(() => {
       setIsRotatingRight(false);
       setIsRotatingLeft(false);
+
       if (action) {
         action.timeScale = 0.5;
       }
-    }, 100); // Adjust the timeout duration as needed
+    }, 100);
   };
-  
-  // Handle touch start event
+
+
   const handleTouchStart = (event) => {
     if (event.touches.length === 1) {
-      // Store the initial touch position
       initialTouchYRef.current = event.touches[0].clientY;
     }
   };
-  
-  // Handle touch move event
+
+
   const handleTouchMove = (event) => {
     if (event.touches.length === 1) {
       event.preventDefault();
       event.stopPropagation();
       
       const currentTouchY = event.touches[0].clientY;
-      // Calculate the touch movement delta
       const deltaY = initialTouchYRef.current - currentTouchY;
-      // Update the initial touch position for the next movement
       initialTouchYRef.current = currentTouchY;
-    
-      // Determine the scroll delta
       const scrollDelta = deltaY;
 
       if (!sunDragging) {
-        // Update rotation direction states immediately
         setIsRotatingRight(scrollDelta > 0);
         setIsRotatingLeft(scrollDelta < 0);
-      
-        // Adjust the factor based on the desired sensitivity
         const rotationChange = scrollDelta * 0.001 * Math.PI;
-      
-        // Update the black hole's rotation
         blackHoleRef.current.rotation.y += rotationChange;
-      
-        // Update the rotation speed
         rotationSpeed.current = rotationChange;
-      
-        // Determine the direction for the animation based on scroll direction
+        
         const action = actions['Take 001'];
+        
         if (action) {
           action.timeScale = scrollDelta > 0 ? 2 : -2;
           action.play();
         }
-      
-        // Clear any existing timeout
+
         clearTimeout(rotationEndTimeoutRef.current);
-      
-        // Set a new timeout
+
         rotationEndTimeoutRef.current = setTimeout(() => {
           setIsRotatingRight(false);
           setIsRotatingLeft(false);
           if (action) {
             action.timeScale = 0.5;
           }
-        }, 100); // Adjust the timeout duration as needed
+        }, 100);
       }
     }
   };
@@ -183,11 +157,11 @@ const BlackHole = ({
       action.play();
     }
   }, [actions])
-  
-  
+
+
   useEffect(() => {
-    // Add event listeners for pointer and keyboard events
     const blackHole = blackHoleRef.current;
+
     if (blackHole) {
       window.addEventListener("keydown", handleKeyDown);
       window.addEventListener("keyup", handleKeyUp);
@@ -196,7 +170,6 @@ const BlackHole = ({
       window.addEventListener("touchmove", handleTouchMove, { passive: false });
     }
 
-    // Remove event listeners when component unmounts
     return () => {
       if (blackHole) {
         window.removeEventListener("keydown", handleKeyDown);
@@ -208,27 +181,21 @@ const BlackHole = ({
     };
   }, [gl, handleScroll]);
 
-  // This function is called on each frame update
+
   useFrame(() => {
-    // If not rotating, apply damping to slow down the rotation (smoothly)
     if (!isRotatingRight && !isRotatingLeft) {
-      // Apply damping factor
       rotationSpeed.current *= dampingFactor;
 
-      // Stop rotation when speed is very small
       if (Math.abs(rotationSpeed.current) < 0.001) {
         rotationSpeed.current = 0;
       }
-
+      
       blackHoleRef.current.rotation.y += rotationSpeed.current;
     } else {
-      // When rotating, determine the current stage based on black hole's orientation
       const rotation = blackHoleRef.current.rotation.y;
-
-      const normalizedRotation =
-        ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-
-      // Set the current stage based on the black hole's orientation
+      
+      const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      
       const degreeToRadian = degree => degree * Math.PI / 180;
       const stageRange = degreeToRadian(70);
       const gapRange = degreeToRadian(20);
@@ -237,8 +204,7 @@ const BlackHole = ({
       const stage2Start = stage1Start + stageRange + gapRange;
       const stage3Start = stage2Start + stageRange + gapRange;
       const stage4Start = stage3Start + stageRange + gapRange;
-      
-      // Update the switch statement
+
       switch (true) {
         case normalizedRotation >= stage1Start && normalizedRotation < stage1Start + stageRange:
           setCurrentStage(1);
@@ -257,6 +223,7 @@ const BlackHole = ({
       }           
     }
   });
+
   
   return (
     <group 

@@ -16,7 +16,7 @@ const Sky = ({ isRotatingRight, isRotatingLeft }) => {
             skyRef.current.rotation.y -= 0.8 * delta
         }
     })
-
+    
     return (
         <mesh ref={skyRef}>
             <primitive object={sky.scene}/>

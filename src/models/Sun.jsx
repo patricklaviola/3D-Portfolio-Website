@@ -5,26 +5,25 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/galaxy-dbb2f075329747a09cc8add2ad05acad
 Title: Sun
 */
-import { useRef, useEffect, useState } from 'react'; // Importing React hooks for state and reference management
-import { useAnimations, useGLTF } from '@react-three/drei'; // Importing hooks from Drei for animations and loading GLTF models
-import { useFrame, useThree } from '@react-three/fiber'; // Importing hooks from react-three-fiber for rendering and using Three.js context
-import { useDrag } from 'react-use-gesture'; // Importing a hook for handling drag gestures
-import sunScene from '../assets/3d/sun.glb'; // Importing a GLTF model of the sun from assets
+
+import { useRef, useEffect, useState } from 'react';
+import { useAnimations, useGLTF } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useDrag } from 'react-use-gesture';
+import sunScene from '../assets/3d/sun.glb';
 
 
-// Sun component definition
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
-  const sunRef = useRef(); // Creating a ref to refer to the 3D object in the scene
-  const { scene, animations } = useGLTF(sunScene); // Loading the sun scene and its animations using useGLTF hook
-  const { actions } = useAnimations(animations, sunRef); // Setting up animations for the sun model
-  const [velocity, setVelocity] = useState({ x: 0, y: 0 }); // State to track the velocity of the sun
-  const [hasBeenDragged, setHasBeenDragged] = useState(false); // State to track if the sun has been dragged
-  const { size } = useThree(); // Getting the size of the canvas from react-three-fiber's context
-  const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 }) // State to store bounds for sun's movement
-  const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 }); // State to store the sun's stable position
-
-
-  const isMobile = window.innerWidth <= 768 && window.innerWidth <= window.innerHeight; // Check if the screen is a mobile device
+  const sunRef = useRef();
+  const { scene, animations } = useGLTF(sunScene);
+  const { actions } = useAnimations(animations, sunRef);
+  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
+  const [hasBeenDragged, setHasBeenDragged] = useState(false);
+  const { size } = useThree();
+  const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 });
+  const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 });
+  
+  const isMobile = window.innerWidth <= 768 && window.innerWidth <= window.innerHeight;
   const isMobileLandscape = window.innerWidth <= 768 && window.innerWidth >= window.innerHeight;
   const isPortrait = window.innerWidth > 768 && window.innerWidth <= window.innerHeight;
   const isVeryLowRes = window.innerWidth > 768 && window.innerWidth < 1200 && window.innerWidth >= window.innerHeight;
@@ -35,68 +34,57 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   
   
   useEffect(() => {
-    actions['Take 001'].play(); // Playing the first animation on load
+    actions['Take 001'].play();
   }, [])
-  
 
-  // Update bounds based on screen size
+
   useEffect(() => {
-    let newBounds; // Variable to hold the new bounds
-    // Calculate bounds based on device type
+    let newBounds;
     if (isMobile) {
       newBounds = {
         x: size.width / 120,
         y: size.height / 120,
       };
-      // console.log("IS MOBILE")
     } else if (isMobileLandscape) {
       newBounds = {
         x: size.width / 60,
         y: size.height / 60,
       };
-      // console.log("IS MOBILE LANDSCAPE")
     } else if (isVeryLowRes) {
       newBounds = {
         x: size.width / 90,
         y: size.height / 90,
       };
-      // console.log("IS VERY LOW RES")
     } else if (isPortrait) {
       newBounds = {
         x: size.width / 140,
         y: size.height / 140,
       };
-      // console.log("IS PORTRAIT")
     } else if (isLowRes) {
       newBounds = {
         x: size.width / 110,
         y: size.height / 110,
       };
-      // console.log("IS LOW RES")
     } else if (isMidRes) {
       newBounds = {
         x: size.width / 140,
         y: size.height / 140,
       };
-      // console.log("IS MID RES")
     } else if (isHighRes) {
       newBounds = {
         x: size.width / 190,
         y: size.height / 190,
       };
-      // console.log("IS HIGH RES")
     } else if (isVeryHighRes) {
       newBounds = {
         x: size.width / 250,
         y: size.height / 250,
       };
-      // console.log("IS VERY HIGH RES")
     } else {
       newBounds = {
         x: size.width / 140,
         y: size.height / 140,
       };
-      // console.log("IS NOT CATEGORIZED")
     }
     setBounds(newBounds);
   }, [window]);
@@ -104,13 +92,12 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
 
   const bind = useDrag(({ xy: [x, y], down, movement: [mx, my], event }) => {
     const isTouch = event.touches && event.touches.length > 0;
-    const scaleFactor = isTouch ? 400 : 800; // A constant to scale the drag effect
+    const scaleFactor = isTouch ? 400 : 800;
     const xPosition = (x - size.width / 2) / 60;
     const yPosition = (size.height / 2 - y) / 60;
     
   
     if (down) {
-      // Update position while dragging
       sunRef.current.position.x = xPosition;
       sunRef.current.position.y = yPosition;
       setCurrentStage(null);
@@ -119,7 +106,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
         setSunDragging(true);
       }
       if (!hasBeenDragged) {
-        // Set the stable position to the sun's current position when drag starts
         setStablePosition({
           x: sunRef.current.position.x,
           y: sunRef.current.position.y,
@@ -128,7 +114,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
         setHasBeenDragged(true);
       }
     } else {
-      // Update velocity when drag ends
       setVelocity({
         x: mx / scaleFactor,
         y: -my / scaleFactor,
@@ -136,37 +121,34 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       setSunDragging(false);
     }
   }, { pointerEvents: true });
-  
 
-  // Animation frame update
+
   useFrame(({ clock }) => {
-    // Check if the sun has not been dragged
     if (!hasBeenDragged) {
-      // Define the parameters of the elliptical path
-      const a = 11; // Semi-major axis for the x-direction
-      const b = -2; // Semi-minor axis for the y-direction
-      const c = 10; // Semi-axis for the z-direction
-      const speed = 0.5; // Speed of movement
-      // Calculate the elliptical path
+      const a = 11;
+      const b = -2;
+      const c = 10;
+      const speed = 0.5;
+
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
-      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1; // Add vertical offset
+      sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1;
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 18;
     } else if (sunRef.current.position.z < -6 && isMobile) {
       sunRef.current.position.z = -6;
     } else if (sunRef.current.position.z < -6 && !isMobile) {
       sunRef.current.position.z = -6;
     }
-    // Apply the calculated velocity to the sun's position
+
     sunRef.current.position.x += velocity.x;
     sunRef.current.position.y += velocity.y;
-    // Apply damping to the velocity to simulate friction
+
     const dampingFactor = 0.98;
+    
     setVelocity(v => ({
       x: v.x * dampingFactor,
       y: v.y * dampingFactor
     }));
 
-    // Bounds checking and correction
     if (hasBeenDragged) {
       if (sunRef.current.position.x > bounds.x) {
         sunRef.current.position.x = bounds.x;

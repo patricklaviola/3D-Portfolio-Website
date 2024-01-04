@@ -16,7 +16,7 @@ const Astronaut = ({ currentAnimation, ...props}) => {
     const { nodes, materials, animations } = useGLTF(scene);
     const { actions } = useAnimations(animations, group);
 
-    // This effect will run whenever the currentAnimation prop changes
+    
     useEffect(() => {
         Object.values(actions).forEach((action) => action.stop());
 

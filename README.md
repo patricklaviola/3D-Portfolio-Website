@@ -36,10 +36,6 @@ To start the development server:
 npm run dev
 ```
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgements
 
 - React Three Fiber for enabling 3D rendering in React

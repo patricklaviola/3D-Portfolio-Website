@@ -143,7 +143,6 @@ const renderContent = {
     ),
     4: (
         <InfoBox
-            // text="Looking for a developer? I'm just a few keystrokes away."
             text={
                 <div>
                     Looking for a developer?
