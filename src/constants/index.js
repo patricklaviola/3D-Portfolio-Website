@@ -1,4 +1,4 @@
-import { hackreactor, ethica, fontana } from "../assets/images";
+import { hackreactor, ethica, fontana, favicon, get2gether } from "../assets/images";
 import {
     car,
     python,
@@ -176,7 +176,14 @@ export const socialLinks = [
 
 export const projects = [
     {
-        iconUrl: snapgram,
+        iconUrl: favicon,
+        theme: 'btn-back-black',
+        name: '3D PORTFOLIO',
+        description: 'An interactive React application that integrates 3D graphics using Three.js, @react-three/fiber, @react-three/drei, and GLTF models for high-quality visual elements. It features interactive components such as draggable 3D objects, implemented using react-use-gesture, and dynamic animations via Framer Motion. Styling was achieved with Tailwind CSS and email functionality is enabled by EmailJS. Custom hooks and components are utilized for specific functionalities, enhancing the interactive user experience.',
+        link: 'https://gitlab.com/patrick.laviola/3d-portfolio',
+    },
+    {
+        iconUrl: get2gether,
         theme: 'btn-back-pink',
         name: 'GET2GETHER',
         description: 'A full-stack web application aimed at simplifying event planning for social gatherings by allowing authenticated users to create and manage friend groups and group events as well as communicate with other group members through a built-in group chat feature.',

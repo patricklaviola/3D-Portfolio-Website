@@ -3,11 +3,15 @@ import ethica from './ethica.png'
 import fontana from './fontana.svg'
 import logo from './logo.svg'
 import hero from './hero.jpg'
+import favicon from './favicon.ico'
+import get2gether from './get2gether.ico'
 
 export {
     hero,
     ethica,
     fontana,
     hackreactor,
-    logo
-}
+    logo,
+    favicon,
+    get2gether
+}   

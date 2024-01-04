@@ -20,7 +20,7 @@ const Projects = () => {
                 <img 
                   src={project.iconUrl}
                   alt="Project Icon"
-                  className="w-1/2 h-1/2 object-contain"
+                  className="w-3/4 h-3/4 object-contain rounded-lg"
                 />
               </div>
             </div>
