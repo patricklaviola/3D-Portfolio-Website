@@ -125,17 +125,18 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
 
   useFrame(({ clock }) => {
     if (!hasBeenDragged) {
-      const a = 11;
+      const a = 10;
       const b = -2;
-      const c = 10;
+      const c = 11;
       const speed = 0.5;
 
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
       sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1;
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 18;
-    } else if (sunRef.current.position.z < -6 && isMobile) {
+
+    } else if (sunRef.current.position.z < -9 && isMobile) {
       sunRef.current.position.z = -6;
-    } else if (sunRef.current.position.z < -6 && !isMobile) {
+    } else if (sunRef.current.position.z < -9 && !isMobile) {
       sunRef.current.position.z = -6;
     }
 
