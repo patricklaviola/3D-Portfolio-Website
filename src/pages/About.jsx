@@ -19,9 +19,6 @@ const About = () => {
           Driven by a profound passion for technology and an eagerness to contribute innovative solutions to the tech industry, my academic knowledge and hands-on approach position me as a valuable asset in any software engineering role. I am eager to leverage my skills and contribute to exciting innovations in the field of software development.
         </p>
         <br />
-        <p>
-          If you're seeking a dedicated and innovative software engineer with a unique blend of technical acumen and interpersonal skills, feel free to message me here on LinkedIn and explore my work at gitlab.com/patricklaviola.
-        </p>
       </div>
       <div className='py-10 flex flex-col'>
         <h3 className='subhead-text'>My Skills</h3>
