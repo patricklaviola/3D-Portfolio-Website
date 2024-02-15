@@ -6,12 +6,42 @@ Source: https://sketchfab.com/3d-models/galaxy-dbb2f075329747a09cc8add2ad05acad
 Title: Sun
 */
 
-import { useRef, useEffect, useState } from 'react';
-import { useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
-import { useDrag } from 'react-use-gesture';
-import sunScene from '../assets/3d/sun.glb';
+import { useRef, useEffect, useState } from "react";
+import { useAnimations, useGLTF } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useDrag } from "react-use-gesture";
+import sunScene from "../assets/3d/sun.glb";
 
+const RESOLUTIONS = {
+  MOBILE_PORTRAIT: { maxWidth: 768, isLandscape: false, ratio: 120 },
+  MOBILE_LANDSCAPE: { maxWidth: 768, isLandscape: true, ratio: 60 },
+  DESKTOP_VERY_LOW_RES: {
+    minWidth: 769,
+    maxWidth: 1199,
+    isLandscape: true,
+    ratio: 90,
+  },
+  DESKTOP_LOW_RES: {
+    minWidth: 1200,
+    maxWidth: 1599,
+    isLandscape: true,
+    ratio: 110,
+  },
+  DESKTOP_MID_RES: {
+    minWidth: 1600,
+    maxWidth: 2099,
+    isLandscape: true,
+    ratio: 140,
+  },
+  DESKTOP_HIGH_RES: {
+    minWidth: 2100,
+    maxWidth: 2799,
+    isLandscape: true,
+    ratio: 190,
+  },
+  DESKTOP_VERY_HIGH_RES: { minWidth: 2800, isLandscape: true, ratio: 250 },
+  PORTRAIT: { minWidth: 769, isLandscape: false, ratio: 140 },
+};
 
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const sunRef = useRef();
@@ -21,107 +51,62 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const [hasBeenDragged, setHasBeenDragged] = useState(false);
   const { size } = useThree();
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 });
-  const [stablePosition, setStablePosition] = useState({ x: 0, y: -5, z: 0 });
-  
-  const isMobile = window.innerWidth <= 768 && window.innerWidth <= window.innerHeight;
-  const isMobileLandscape = window.innerWidth <= 768 && window.innerWidth >= window.innerHeight;
-  const isPortrait = window.innerWidth > 768 && window.innerWidth <= window.innerHeight;
-  const isVeryLowRes = window.innerWidth > 768 && window.innerWidth < 1200 && window.innerWidth >= window.innerHeight;
-  const isLowRes = window.innerWidth >= 1200 && window.innerWidth < 1600 && window.innerWidth >= window.innerHeight;
-  const isMidRes = window.innerWidth >= 1600 && window.innerWidth < 2100 && window.innerWidth >= window.innerHeight;
-  const isHighRes = window.innerWidth >= 2100 && window.innerWidth < 2800 && window.innerWidth >= window.innerHeight;
-  const isVeryHighRes = window.innerWidth >= 2800 && window.innerWidth >= window.innerHeight;
-  
-  
-  useEffect(() => {
-    actions['Take 001'].play();
-  }, [])
 
-
-  useEffect(() => {
-    let newBounds;
-    if (isMobile) {
-      newBounds = {
-        x: size.width / 120,
-        y: size.height / 120,
-      };
-    } else if (isMobileLandscape) {
-      newBounds = {
-        x: size.width / 60,
-        y: size.height / 60,
-      };
-    } else if (isVeryLowRes) {
-      newBounds = {
-        x: size.width / 90,
-        y: size.height / 90,
-      };
-    } else if (isPortrait) {
-      newBounds = {
-        x: size.width / 140,
-        y: size.height / 140,
-      };
-    } else if (isLowRes) {
-      newBounds = {
-        x: size.width / 110,
-        y: size.height / 110,
-      };
-    } else if (isMidRes) {
-      newBounds = {
-        x: size.width / 140,
-        y: size.height / 140,
-      };
-    } else if (isHighRes) {
-      newBounds = {
-        x: size.width / 190,
-        y: size.height / 190,
-      };
-    } else if (isVeryHighRes) {
-      newBounds = {
-        x: size.width / 250,
-        y: size.height / 250,
-      };
-    } else {
-      newBounds = {
-        x: size.width / 140,
-        y: size.height / 140,
-      };
+  let currentResolution;
+  for (const res in RESOLUTIONS) {
+    const { minWidth, maxWidth, isLandscape, ratio } = RESOLUTIONS[res];
+    const isCurrentResolution =
+      (minWidth ? window.innerWidth >= minWidth : true) &&
+      (maxWidth ? window.innerWidth <= maxWidth : true) &&
+      (isLandscape
+        ? window.innerWidth >= window.innerHeight
+        : window.innerWidth <= window.innerHeight);
+    if (isCurrentResolution) {
+      currentResolution = { ...RESOLUTIONS[res], name: res };
+      break;
     }
-    setBounds(newBounds);
+  }
+
+  useEffect(() => {
+    actions["Take 001"].play();
+  }, []);
+
+  useEffect(() => {
+    const updatedSunMovementbounds = {
+      x: size.width / currentResolution.ratio,
+      y: size.height / currentResolution.ratio,
+    };
+    setBounds(updatedSunMovementbounds);
   }, [window]);
 
+  const sunDragHandlers = useDrag(
+    ({ xy: [x, y], down, movement: [mx, my], event }) => {
+      const isTouch = event.touches && event.touches.length > 0;
+      const scaleFactor = isTouch ? 400 : 800;
+      const xPosition = (x - size.width / 2) / 60;
+      const yPosition = (size.height / 2 - y) / 60;
 
-  const bind = useDrag(({ xy: [x, y], down, movement: [mx, my], event }) => {
-    const isTouch = event.touches && event.touches.length > 0;
-    const scaleFactor = isTouch ? 400 : 800;
-    const xPosition = (x - size.width / 2) / 60;
-    const yPosition = (size.height / 2 - y) / 60;
-    
-  
-    if (down) {
-      sunRef.current.position.x = xPosition;
-      sunRef.current.position.y = yPosition;
-      setCurrentStage(null);
+      if (down) {
+        sunRef.current.position.x = xPosition;
+        sunRef.current.position.y = yPosition;
+        setCurrentStage(null);
 
-      if (!sunDragging) {
-        setSunDragging(true);
-      }
-      if (!hasBeenDragged) {
-        setStablePosition({
-          x: sunRef.current.position.x,
-          y: sunRef.current.position.y,
-          z: sunRef.current.position.z
+        if (!sunDragging) {
+          setSunDragging(true);
+        }
+        if (!hasBeenDragged) {
+          setHasBeenDragged(true);
+        }
+      } else {
+        setVelocity({
+          x: mx / scaleFactor,
+          y: -my / scaleFactor,
         });
-        setHasBeenDragged(true);
+        setSunDragging(false);
       }
-    } else {
-      setVelocity({
-        x: mx / scaleFactor,
-        y: -my / scaleFactor,
-      });
-      setSunDragging(false);
-    }
-  }, { pointerEvents: true });
-
+    },
+    { pointerEvents: true }
+  );
 
   useFrame(({ clock }) => {
     if (!hasBeenDragged) {
@@ -133,10 +118,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
       sunRef.current.position.x = a * Math.cos(speed * clock.elapsedTime);
       sunRef.current.position.y = b * Math.sin(speed * clock.elapsedTime) - 1;
       sunRef.current.position.z = c * Math.sin(speed * clock.elapsedTime) - 18;
-
-    } else if (sunRef.current.position.z < -9 && isMobile) {
-      sunRef.current.position.z = -6;
-    } else if (sunRef.current.position.z < -9 && !isMobile) {
+    } else if (sunRef.current.position.z < -9) {
       sunRef.current.position.z = -6;
     }
 
@@ -144,42 +126,41 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
     sunRef.current.position.y += velocity.y;
 
     const dampingFactor = 0.98;
-    
-    setVelocity(v => ({
+
+    setVelocity((v) => ({
       x: v.x * dampingFactor,
-      y: v.y * dampingFactor
+      y: v.y * dampingFactor,
     }));
 
     if (hasBeenDragged) {
       if (sunRef.current.position.x > bounds.x) {
         sunRef.current.position.x = bounds.x;
-        setVelocity(v => ({ ...v, x: -Math.abs(v.x) }));
+        setVelocity((v) => ({ ...v, x: -Math.abs(v.x) }));
       } else if (sunRef.current.position.x < -bounds.x) {
         sunRef.current.position.x = -bounds.x;
-        setVelocity(v => ({ ...v, x: Math.abs(v.x) }));
+        setVelocity((v) => ({ ...v, x: Math.abs(v.x) }));
       }
-  
+
       if (sunRef.current.position.y > bounds.y) {
         sunRef.current.position.y = bounds.y;
-        setVelocity(v => ({ ...v, y: -Math.abs(v.y) }));
+        setVelocity((v) => ({ ...v, y: -Math.abs(v.y) }));
       } else if (sunRef.current.position.y < -bounds.y) {
         sunRef.current.position.y = -bounds.y;
-        setVelocity(v => ({ ...v, y: Math.abs(v.y) }));
+        setVelocity((v) => ({ ...v, y: Math.abs(v.y) }));
       }
     }
   });
-
 
   return (
     <mesh
       position={[2, -1.4, 0]}
       scale={[0.09, 0.09, 0.09]}
       ref={sunRef}
-      {...bind()}
+      {...sunDragHandlers()}
     >
       <primitive object={scene} />
     </mesh>
   );
-}
+};
 
 export default Sun;
