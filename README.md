@@ -15,6 +15,26 @@ This portfolio is more than just a display of work; it's a testament to the powe
 - **Modern Development Stack:** Utilizing Vite and React for fast, efficient, and maintainable codebase.
 - **Hosted on Hostinger:** Reliable and fast hosting, providing a smooth user experience globally.
 
+## Screenshots
+
+Here are some screenshots of the website:
+
+### Homepage
+
+![Homepage screenshot](screenshots/homepage.png)
+
+### About Page
+
+![About page screenshot](screenshots/about.png)
+
+### Projects Page
+
+![Projects page screenshot](screenshots/projects.png)
+
+### Contact Page
+
+![Contact page screenshot](screenshots/contact.png)
+
 ## Installation and Setup
 
 Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on your machine. Then, clone the repository:
