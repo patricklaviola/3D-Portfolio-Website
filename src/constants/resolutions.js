@@ -28,3 +28,21 @@ export const RESOLUTIONS = {
   DESKTOP_VERY_HIGH_RES: { minWidth: 2800, isLandscape: true, ratio: 250 },
   PORTRAIT: { minWidth: 769, isLandscape: false, ratio: 140 },
 };
+
+export const getCurrentResolution = () => {
+  let currentResolution;
+  for (const res in RESOLUTIONS) {
+    const { minWidth, maxWidth, isLandscape } = RESOLUTIONS[res];
+    const isCurrentResolution =
+      (minWidth ? window.innerWidth >= minWidth : true) &&
+      (maxWidth ? window.innerWidth <= maxWidth : true) &&
+      (isLandscape
+        ? window.innerWidth >= window.innerHeight
+        : window.innerWidth <= window.innerHeight);
+    if (isCurrentResolution) {
+      currentResolution = { ...RESOLUTIONS[res], name: res };
+      break;
+    }
+  }
+  return currentResolution;
+};

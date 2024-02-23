@@ -12,6 +12,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useDrag } from "react-use-gesture";
 import sunScene from "../assets/3d/sun.glb";
 import { RESOLUTIONS } from "../constants/resolutions";
+import { getCurrentResolution } from "../constants/resolutions";
 
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const sunRef = useRef();
@@ -21,21 +22,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const [hasBeenDragged, setHasBeenDragged] = useState(false);
   const { size } = useThree();
   const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 });
-
-  let currentResolution;
-  for (const res in RESOLUTIONS) {
-    const { minWidth, maxWidth, isLandscape, ratio } = RESOLUTIONS[res];
-    const isCurrentResolution =
-      (minWidth ? window.innerWidth >= minWidth : true) &&
-      (maxWidth ? window.innerWidth <= maxWidth : true) &&
-      (isLandscape
-        ? window.innerWidth >= window.innerHeight
-        : window.innerWidth <= window.innerHeight);
-    if (isCurrentResolution) {
-      currentResolution = { ...RESOLUTIONS[res], name: res };
-      break;
-    }
-  }
+  const currentResolution = getCurrentResolution();
 
   useEffect(() => {
     actions["Take 001"].play();
