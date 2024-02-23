@@ -9,10 +9,9 @@ Title: Sun
 import { useRef, useEffect, useState } from "react";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useDrag } from "react-use-gesture";
-import sunScene from "../assets/3d/sun.glb";
-import { RESOLUTIONS } from "../constants/resolutions";
+import { useSunDrag } from "../hooks/useSunDrag";
 import { getCurrentResolution } from "../constants/resolutions";
+import sunScene from "../assets/3d/sun.glb";
 
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const sunRef = useRef();
@@ -21,49 +20,29 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [hasBeenDragged, setHasBeenDragged] = useState(false);
   const { size } = useThree();
-  const [bounds, setBounds] = useState({ x: 5, y: 5, z: 5 });
+  const [bounds, setBounds] = useState({ x: 5, y: 5 });
   const currentResolution = getCurrentResolution();
+  const sunDragHandlers = useSunDrag(
+    sunRef,
+    setCurrentStage,
+    setSunDragging,
+    sunDragging,
+    hasBeenDragged,
+    setHasBeenDragged,
+    setVelocity
+  );
 
   useEffect(() => {
     actions["Take 001"].play();
   }, []);
 
   useEffect(() => {
-    const updatedSunMovementbounds = {
+    const updatedSunMovementBounds = {
       x: size.width / currentResolution.ratio,
       y: size.height / currentResolution.ratio,
     };
-    setBounds(updatedSunMovementbounds);
+    setBounds(updatedSunMovementBounds);
   }, [window]);
-
-  const sunDragHandlers = useDrag(
-    ({ xy: [x, y], down, movement: [mx, my], event }) => {
-      const isTouch = event.touches && event.touches.length > 0;
-      const scaleFactor = isTouch ? 400 : 800;
-      const xPosition = (x - size.width / 2) / 60;
-      const yPosition = (size.height / 2 - y) / 60;
-
-      if (down) {
-        sunRef.current.position.x = xPosition;
-        sunRef.current.position.y = yPosition;
-        setCurrentStage(null);
-
-        if (!sunDragging) {
-          setSunDragging(true);
-        }
-        if (!hasBeenDragged) {
-          setHasBeenDragged(true);
-        }
-      } else {
-        setVelocity({
-          x: mx / scaleFactor,
-          y: -my / scaleFactor,
-        });
-        setSunDragging(false);
-      }
-    },
-    { pointerEvents: true }
-  );
 
   useFrame(({ clock }) => {
     if (!hasBeenDragged) {
