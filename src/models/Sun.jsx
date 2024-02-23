@@ -8,9 +8,9 @@ Title: Sun
 
 import { useRef, useEffect, useState } from "react";
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
-import { useSunDrag } from "../hooks/useSunDrag";
-import { getCurrentResolution } from "../constants/resolutions";
+import { useFrame } from "@react-three/fiber";
+import useSunDrag from "../hooks/useSunDrag";
+import useSunMovementBounds from "../hooks/useSunMovementBounds";
 import sunScene from "../assets/3d/sun.glb";
 
 const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
@@ -19,9 +19,7 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   const { actions } = useAnimations(animations, sunRef);
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [hasBeenDragged, setHasBeenDragged] = useState(false);
-  const { size } = useThree();
-  const [bounds, setBounds] = useState({ x: 5, y: 5 });
-  const currentResolution = getCurrentResolution();
+  const bounds = useSunMovementBounds();
   const sunDragHandlers = useSunDrag(
     sunRef,
     setCurrentStage,
@@ -35,14 +33,6 @@ const Sun = ({ setCurrentStage, setSunDragging, sunDragging, ...props }) => {
   useEffect(() => {
     actions["Take 001"].play();
   }, []);
-
-  useEffect(() => {
-    const updatedSunMovementBounds = {
-      x: size.width / currentResolution.ratio,
-      y: size.height / currentResolution.ratio,
-    };
-    setBounds(updatedSunMovementBounds);
-  }, [window]);
 
   useFrame(({ clock }) => {
     if (!hasBeenDragged) {

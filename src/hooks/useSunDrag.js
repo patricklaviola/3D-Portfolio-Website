@@ -1,7 +1,7 @@
 import { useDrag } from "react-use-gesture";
 import { useThree } from "@react-three/fiber";
 
-export const useSunDrag = (
+const useSunDrag = (
   sunRef,
   setCurrentStage,
   setSunDragging,
@@ -41,3 +41,5 @@ export const useSunDrag = (
     { pointerEvents: true }
   );
 };
+
+export default useSunDrag;
