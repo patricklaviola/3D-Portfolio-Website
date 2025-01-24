@@ -233,7 +233,7 @@ export const projects = [
     name: "3D PORTFOLIO",
     description:
       "An interactive React application that integrates 3D graphics using Three.js, @react-three/fiber, @react-three/drei, and GLTF models for high-quality visual elements. It features interactive components such as draggable 3D objects, implemented using react-use-gesture, and dynamic animations via Framer Motion. Styling was achieved with Tailwind CSS and email functionality is enabled by EmailJS. Custom hooks and components are utilized for specific functionalities, enhancing the interactive user experience.",
-    link: "https://gitlab.com/patrick.laviola/3d-portfolio",
+    link: "https://github.com/patricklaviola/3D-Portfolio-Website",
   },
   // {
   //   iconUrl: get2gether,

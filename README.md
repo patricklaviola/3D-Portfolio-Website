@@ -41,7 +41,7 @@ Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on yo
 
 ```bash
 git clone https://gitlab.com/patrick.laviola/3d-portfolio.git
-cd 3d-portfolio
+cd 3D-Portfolio-Website
 ```
 
 Install the dependencies:
