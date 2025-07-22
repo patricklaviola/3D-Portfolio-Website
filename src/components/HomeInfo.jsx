@@ -5,10 +5,22 @@ import { arrow } from "../assets/icons";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 
+const tiltOptions = {
+  reverse: true, // reverse the tilt direction
+  max: 25, // max tilt rotation (degrees)
+  perspective: 1000, // Transform perspective, lower = more extreme tilt
+  scale: 1, // 2 = 200%, 1.5 = 150%, etc
+  speed: 300, // Speed of the enter/exit transition
+  transition: true, // Set a transition on enter/exit
+  axis: null, // Restrict the tilt direction (null = both, 'x' or 'y')
+  reset: true, // Reset tilt on exit
+  easing: "cubic-bezier(.03,.98,.52,.99)", // Easing on enter/exit
+  glare: true, // Enable glare
+  "max-glare": 0.9, // Set glare intensty (0 to 1)
+};
+
 const InfoBox = ({ text, link, btnText }) => (
-  <Tilt
-    options={{ max: 20, scale: 1, speed: 300, glare: true, "max-glare": 0.9 }}
-  >
+  <Tilt options={tiltOptions}>
     <motion.div
       initial="hidden"
       animate="show"

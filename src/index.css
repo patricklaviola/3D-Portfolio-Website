@@ -11,6 +11,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  overscroll-behavior: none;
 }
 
 body:has(.card[data-color="blue"]:hover) {
@@ -195,12 +196,11 @@ body:has(.card[data-color="green"]:hover) {
   transform: translateZ(0);
 }
 
-
 .top-container {
   display: flex;
   width: 25%;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
   padding-left: 20px;
   padding-left: 5px;
   gap: 1rem;
@@ -247,7 +247,6 @@ body:has(.card[data-color="green"]:hover) {
   background-color: #aaa6c3;
   border-radius: 10%;
 }
-
 
 .footer {
   @apply w-auto mx-auto sm:px-16 pb-6 px-8 flex flex-col gap-7;
